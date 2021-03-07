@@ -11,7 +11,7 @@ final class UziReaderTest extends TestCase
 {
     public function testCheckRequestHasNoCert(): void
     {
-        $uzi = new UziReader;
+        $uzi = new UziReader();
 
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("Apache client cert check not passed");
@@ -21,7 +21,7 @@ final class UziReaderTest extends TestCase
 
     public function testCheckSSLClientFailed(): void
     {
-        $uzi = new UziReader;
+        $uzi = new UziReader();
 
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("Apache client cert check not passed");
@@ -32,7 +32,7 @@ final class UziReaderTest extends TestCase
 
     public function testCheckNoClientCert(): void
     {
-        $uzi = new UziReader;
+        $uzi = new UziReader();
 
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("No client certificate presented");
@@ -44,7 +44,7 @@ final class UziReaderTest extends TestCase
 
     public function testCheckCertWithoutValidData(): void
     {
-        $uzi = new UziReader;
+        $uzi = new UziReader();
 
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("No valid UZI data found");
@@ -57,7 +57,7 @@ final class UziReaderTest extends TestCase
 
     public function testCheckCertWithInvalidSAN(): void
     {
-        $uzi = new UziReader;
+        $uzi = new UziReader();
 
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("No valid UZI data found");
@@ -70,7 +70,7 @@ final class UziReaderTest extends TestCase
 
     public function testCheckCertWithInvalidOtherName(): void
     {
-        $uzi = new UziReader;
+        $uzi = new UziReader();
 
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("No valid UZI data found");
@@ -83,7 +83,7 @@ final class UziReaderTest extends TestCase
 
     public function testCheckCertWithoutIa5string(): void
     {
-        $uzi = new UziReader;
+        $uzi = new UziReader();
 
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("No ia5String");
@@ -96,7 +96,7 @@ final class UziReaderTest extends TestCase
 
     public function testCheckCertIncorrectSanData(): void
     {
-        $uzi = new UziReader;
+        $uzi = new UziReader();
 
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("Incorrect SAN found");
@@ -109,7 +109,7 @@ final class UziReaderTest extends TestCase
 
     public function testCheckCertIncorrectSanData2(): void
     {
-        $uzi = new UziReader;
+        $uzi = new UziReader();
 
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("Incorrect SAN found");
@@ -122,7 +122,7 @@ final class UziReaderTest extends TestCase
 
     public function testCheckValidCert(): void
     {
-        $uzi = new UziReader;
+        $uzi = new UziReader();
 
         $_SERVER['SSL_CLIENT_VERIFY'] = "SUCCESS";
         $_SERVER['SSL_CLIENT_CERT'] = file_get_contents(__DIR__ . '/certs/mock-011-correct.cert');
@@ -143,7 +143,7 @@ final class UziReaderTest extends TestCase
 
     public function testCheckValidAdminCert(): void
     {
-        $uzi = new UziReader;
+        $uzi = new UziReader();
 
         $_SERVER['SSL_CLIENT_VERIFY'] = "SUCCESS";
         $_SERVER['SSL_CLIENT_CERT'] = file_get_contents(__DIR__ . '/certs/mock-012-correct-admin.cert');
