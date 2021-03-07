@@ -15,8 +15,6 @@ use MinVWS\PUZI\Exceptions\UziException;
  */
 class UziReader
 {
-    protected const OID_IA5STRING = '2.5.5.5';  // https://oidref.com/2.5.5.5
-
     /**
      * @return array
      * @throws UziException
@@ -55,7 +53,7 @@ class UziReader
             }
 
             foreach ($extension['extnValue'] as $value) {
-                if (!isset($value['otherName']) || $value['otherName']['type-id'] !== self::OID_IA5STRING) {
+                if (!isset($value['otherName']) || $value['otherName']['type-id'] !== UziConstants::OID_IA5STRING) {
                     continue;
                 }
 

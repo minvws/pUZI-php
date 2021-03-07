@@ -72,7 +72,11 @@ array(9) {
 
 ## Uses
 
-[PHP Secure Communications Library](https://phpseclib.com/)
+phpseclib - [PHP Secure Communications Library](https://phpseclib.com/)
+
+## Used by
+
+puzi-laravel - [Laravel wrapper for proficient UZI pass reader](https://github.com/annejan/pUZI-laravel) for Laravel 6, 7 and 8.
 
 ## Contributing
 
