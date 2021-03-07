@@ -34,7 +34,7 @@ Add the following to your `composer.json` and then run `composer install`.
 ```json
 {
     "require": {
-        "minvws/puzi-php": "^0.1"
+        "minvws/puzi-php": "^0.2"
     }
 }
 ```
