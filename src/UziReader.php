@@ -24,19 +24,13 @@ class UziReader
     public function getData(): array
     {
         if (!isset($_SERVER['SSL_CLIENT_VERIFY']) || $_SERVER['SSL_CLIENT_VERIFY'] !== 'SUCCESS') {
-            throw new UziException('Apache client cert check not passed');
+            throw new UziException('Webserver client cert check not passed');
         }
-
-        /** @var string|null $pem */
-        $pem = null;
         if (isset($_SERVER['SSL_CLIENT_CERT'])) {
-            $pem = $_SERVER['SSL_CLIENT_CERT'];
-        }
-        if (!$pem) {
             throw new UziException('No client certificate presented');
         }
         $x509 = new X509();
-        $cert = $x509->loadX509($pem);
+        $cert = $x509->loadX509($_SERVER['SSL_CLIENT_CERT']);
         $surName = null;
         $givenName = null;
         $user = null;
@@ -46,7 +40,7 @@ class UziReader
         }
         foreach ($cert['tbsCertificate']['subject']['rdnSequence'] as $sequence) {
             if ($givenName && $surName) {
-                continue;
+                break;
             }
             $data = reset($sequence);
             if ($data['type'] === 'id-at-surname') {
@@ -86,7 +80,7 @@ class UziReader
                 if (!is_array($data) || count($data) < 6) {
                     throw new UziException('Incorrect SAN found');
                 }
-                $user = [
+                return [
                     'givenName' => $givenName,
                     'surName' => $surName,
                     'OidCa' => $data[0],
@@ -99,9 +93,6 @@ class UziReader
                 ];
             }
         }
-        if ($user === null) {
-            throw new UziException('No valid UZI data found');
-        }
-        return $user;
+        throw new UziException('No valid UZI data found');
     }
 }
