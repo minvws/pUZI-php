@@ -1,12 +1,23 @@
 {
   "name": "annejan/p-uzi-php",
   "description": "PHP library to read data from an UZI pass.",
+  "keywords": [
+    "security",
+    "crypto",
+    "cryptography",
+    "signature",
+    "x509",
+    "x.509",
+    "asn1",
+    "asn.1",
+    "UZI"
+  ],
   "type": "library",
   "license": "EUPL",
   "authors": [
     {
       "name": "Anne Jan Brouwer",
-      "email": "annejan@noprotocol.nl"
+      "email": "brouwer@annejan.com"
     },
     {
       "name": "Nick ten Cate",
@@ -18,7 +29,7 @@
     },
     {
       "name": "Joshua Thijssen",
-      "email": "joshua@egeniq.com"
+      "email": "jthijssen@noxlogic.nl"
     }
   ],
   "require": {
@@ -34,6 +45,14 @@
   "autoload": {
     "psr-4": {
       "MinVWS\\PUZI\\": "src/"
-    }
+    },
+    "classmap": [
+      "src/"
+    ]
+  },
+  "suggest": {
+    "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations.",
+    "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
+    "ext-gmp": "Install the GMP (GNU Multiple Precision) extension in order to speed up arbitrary precision integer arithmetic operations."
   }
 }

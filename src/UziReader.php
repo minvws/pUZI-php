@@ -23,12 +23,15 @@ class UziReader
      */
     public function getData(): array
     {
-        if ($_SERVER['SSL_CLIENT_VERIFY'] !== 'SUCCESS') {
+        if (!isset($_SERVER['SSL_CLIENT_VERIFY']) || $_SERVER['SSL_CLIENT_VERIFY'] !== 'SUCCESS') {
             throw new UziException('Apache client cert check not passed');
         }
 
-        /** @var string $pem */
-        $pem = $_SERVER['SSL_CLIENT_CERT'];
+        /** @var string|null $pem */
+        $pem = null;
+        if (isset($_SERVER['SSL_CLIENT_CERT'])) {
+            $pem = $_SERVER['SSL_CLIENT_CERT'];
+        }
         if (!$pem) {
             throw new UziException('No client certificate presented');
         }
