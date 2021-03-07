@@ -1,4 +1,6 @@
+![alt text](pUZI.svg "Logo Title Text 1")
 # pUZI php
+
 [![PHP](https://github.com/annejan/pUZI-php/actions/workflows/test.yml/badge.svg)](https://github.com/annejan/pUZI-php/actions/workflows/test.yml)
 
 Proficient UZI pass reader in php.
