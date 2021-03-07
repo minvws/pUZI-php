@@ -33,21 +33,20 @@ class UziReader
         $cert = $x509->loadX509($_SERVER['SSL_CLIENT_CERT']);
         $surName = null;
         $givenName = null;
-        $user = null;
 
         if (!isset($cert['tbsCertificate']['subject']['rdnSequence'])) {
             throw new UziException('No subject rdnSequence');
         }
         foreach ($cert['tbsCertificate']['subject']['rdnSequence'] as $sequence) {
-            if ($givenName && $surName) {
-                break;
-            }
             $data = reset($sequence);
             if ($data['type'] === 'id-at-surname') {
                 $surName = $data['value']['utf8String'];
             }
             if ($data['type'] === 'id-at-givenName') {
                 $givenName = $data['value']['utf8String'];
+            }
+            if ($givenName && $surName) {
+                break;
             }
         }
         foreach ($cert['tbsCertificate']['extensions'] as $extension) {
