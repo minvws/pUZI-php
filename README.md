@@ -108,3 +108,5 @@ puzi-laravel - [Laravel wrapper for proficient UZI pass reader](https://github.c
     ```
 
 7. Send us a Pull Request
+   
+![pUZI](pUZI-hidden.svg "pUZI")
