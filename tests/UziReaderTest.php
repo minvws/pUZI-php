@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use MinVWS\PUZI\Exceptions\UziException;
 use MinVWS\PUZI\UziReader;
 use PHPUnit\Framework\TestCase;
