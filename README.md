@@ -19,6 +19,26 @@ SSLCACertificateFile /path/to/uziCA.crt
 SSLOptions +StdEnvVars +ExportCertData
 ```
 
+## Installation
+
+### Composer
+
+```sh
+composer require minvws/puzi-php
+```
+
+### Manual
+
+Add the following to your `composer.json` and then run `composer install`.
+
+```json
+{
+    "require": {
+        "minvws/puzi-php": "^0.1"
+    }
+}
+```
+
 ## Usage
 
 ```php
