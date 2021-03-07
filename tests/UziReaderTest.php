@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace MinVWS\PUZI\Tests;
 
 use MinVWS\PUZI\Exceptions\UziException;
 use MinVWS\PUZI\UziReader;

@@ -1,5 +1,5 @@
 {
-  "name": "annejan/p-uzi-php",
+  "name": "minvws/puzi-php",
   "description": "PHP library to read data from an UZI pass.",
   "keywords": [
     "security",
@@ -49,6 +49,11 @@
     "classmap": [
       "src/"
     ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MinVWS\\PUZI\\Tests\\": "tests/"
+    }
   },
   "suggest": {
     "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations.",
