@@ -1,7 +1,8 @@
 # pUZI php
+[![Laravel](https://github.com/annejan/pUZI-php/actions/workflows/test.yml/badge.svg)](https://github.com/annejan/pUZI-php/actions/workflows/test.yml)
 
 Proficient UZI pass reader in php.
-[![Laravel](https://github.com/annejan/pUZI-php/actions/workflows/test.yml/badge.svg)](https://github.com/annejan/pUZI-php/actions/workflows/test.yml)
+
 ## Requirements
 
 * PHP >= 7.3
@@ -15,7 +16,26 @@ var_dump($data);
 ```
 
 ```text
-
+array(9) {
+  'givenName' =>
+  string(4) "john"
+  'surName' =>
+  string(12) "doe-11111111"
+  'OidCa' =>
+  string(25) "2.16.528.1.1003.1.3.5.5.2"
+  'UziVersion' =>
+  string(1) "1"
+  'UziNumber' =>
+  string(8) "11111111"
+  'CardType' =>
+  string(1) "N"
+  'SubscriberNumber' =>
+  string(8) "90000111"
+  'Role' =>
+  string(6) "01.015"
+  'AgbCode' =>
+  string(8) "00000000"
+}
 ```
 
 ## Uses
