@@ -26,7 +26,7 @@ class UziReader
         if (!isset($_SERVER['SSL_CLIENT_VERIFY']) || $_SERVER['SSL_CLIENT_VERIFY'] !== 'SUCCESS') {
             throw new UziException('Webserver client cert check not passed');
         }
-        if (isset($_SERVER['SSL_CLIENT_CERT'])) {
+        if (!isset($_SERVER['SSL_CLIENT_CERT'])) {
             throw new UziException('No client certificate presented');
         }
         $x509 = new X509();
