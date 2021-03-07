@@ -20,7 +20,7 @@ class UziConstants
     public const UZI_TYPE_CARE_PROVIDER = 'Z';                           // Reference page 60
     public const UZI_TYPE_NAMED_EMPLOYEE = 'N';                          // Reference page 60
     public const UZI_TYPE_UNNAMED_EMPLOYEE = 'M';                        // Reference page 60
-    public const UZI_TYPE_SERVER= 'S';                                   // Reference page 60
+    public const UZI_TYPE_SERVER = 'S';                                  // Reference page 60
 
     public const UZI_ROLE_PHARMACIST = '17.';                            // Reference page 89
     public const UZI_ROLE_DOCTOR = '01.';                                // Reference page 89
