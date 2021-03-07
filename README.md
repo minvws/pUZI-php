@@ -7,6 +7,18 @@ Proficient UZI pass reader in php.
 
 * PHP >= 7.3
 
+Apache config (or NginX equivalent):
+```apacheconf
+SSLEngine on
+SSLProtocol -all +TLSv1.3
+SSLHonorCipherOrder on
+SSLCipherSuite ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+SSLVerifyClient require
+SSLVerifyDepth 3
+SSLCACertificateFile /path/to/uziCA.crt
+SSLOptions +StdEnvVars +ExportCertData
+```
+
 ## Usage
 
 ```php
