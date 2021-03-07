@@ -16,7 +16,7 @@ final class UziReaderTest extends TestCase
         $uzi = new UziReader();
 
         $this->expectException(UziException::class);
-        $this->expectExceptionMessage("Apache client cert check not passed");
+        $this->expectExceptionMessage("Webserver client cert check not passed");
 
         $uzi->getData();
     }
@@ -26,7 +26,7 @@ final class UziReaderTest extends TestCase
         $uzi = new UziReader();
 
         $this->expectException(UziException::class);
-        $this->expectExceptionMessage("Apache client cert check not passed");
+        $this->expectExceptionMessage("Webserver client cert check not passed");
 
         $_SERVER['SSL_CLIENT_VERIFY'] = "failed";
         $uzi->getData();
