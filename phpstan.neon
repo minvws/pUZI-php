@@ -1,6 +1,7 @@
 parameters:
     paths:
         - src
+        - tests
     level: 8
     inferPrivatePropertyTypeFromConstructor: true
     checkMissingIterableValueType: false

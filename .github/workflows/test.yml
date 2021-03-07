@@ -1,0 +1,35 @@
+name: Laravel
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  tests:
+
+    runs-on: ubuntu-20.04
+
+    strategy:
+      max-parallel: 3
+      matrix:
+        php-versions: [ '7.3', '7.4', '8.0' ]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install PHP
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: ${{ matrix.php-versions }}
+        extensions: xdebug
+    - name: Install Dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Execute tests (Unit and Feature)
+      run: vendor/bin/phpunit --coverage-text
+    - name: Static analysis with PHPStan
+      run: vendor/bin/phpstan analyse
+    - name: Static analysis with Psalm
+      run: vendor/bin/psalm
+    - name: Coding style PSR12 Check
+      run: vendor/bin/phpcs 
