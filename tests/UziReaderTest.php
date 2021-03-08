@@ -8,7 +8,9 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class UziReaderTest.
+ * Class UziReaderTest
+ * SPDX-License-Identifier: EUPL-1.2
+ * @package MinVWS\PUZI\Tests
  */
 final class UziReaderTest extends TestCase
 {
