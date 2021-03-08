@@ -1,7 +1,7 @@
 ![pUZI logo](pUZI.svg "pUZI logo" )
 # pUZI php
 
-[![PHP](https://github.com/annejan/pUZI-php/actions/workflows/test.yml/badge.svg)](https://github.com/annejan/pUZI-php/actions/workflows/test.yml)
+[![PHP](https://github.com/minvws/pUZI-php/actions/workflows/test.yml/badge.svg)](https://github.com/minvws/pUZI-php/actions/workflows/test.yml)
 
 Proficient UZI pass reader in php.
 
