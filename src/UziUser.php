@@ -2,6 +2,11 @@
 
 namespace MinVWS\PUZI;
 
+/**
+ * Class UziUser
+ * SPDX-License-Identifier: EUPL-1.2
+ * @package MinVWS\PUZI
+ */
 class UziUser implements \JsonSerializable
 {
     /** @var string */

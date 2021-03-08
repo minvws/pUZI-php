@@ -3,8 +3,8 @@
 namespace MinVWS\PUZI;
 
 /**
- * Class UziConstants.
- *
+ * Class UziConstants
+ * SPDX-License-Identifier: EUPL-1.2
  * For reference please read
  * https://www.zorgcsp.nl/documents/RK1%20CPS%20UZI-register%20V10.2%20ENG.pdf
  *

@@ -8,10 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class UziReader
- *
+ * SPDX-License-Identifier: EUPL-1.2
  * For reference please read
  * https://www.zorgcsp.nl/documents/RK1%20CPS%20UZI-register%20V10.2%20ENG.pdf
- *
  * @package MinVWS\PUZI
  */
 class UziReader
