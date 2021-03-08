@@ -83,8 +83,8 @@ class UziReader
                 }
 
                 $user = new UziUser();
-                $user->setGivenName($givenName);
-                $user->setSurName($surName);
+                $user->setGivenName($givenName ?? "");
+                $user->setSurName($surName ?? "");
                 $user->setOidCa($data[0]);
                 $user->setUziVersion($data[1]);
                 $user->setUziNumber($data[2]);

@@ -100,7 +100,8 @@ final class UziReaderTest extends TestCase
 
         $request = new Request();
         $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
-        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-004-othername-without-ia5string.cert'));
+        $cert = file_get_contents(__DIR__ . '/certs/mock-004-othername-without-ia5string.cert');
+        $request->server->set('SSL_CLIENT_CERT', $cert);
 
         $uzi->getDataFromRequest($request);
     }
@@ -114,7 +115,8 @@ final class UziReaderTest extends TestCase
 
         $request = new Request();
         $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
-        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-005-incorrect-san-data.cert'));
+        $cert = file_get_contents(__DIR__ . '/certs/mock-005-incorrect-san-data.cert');
+        $request->server->set('SSL_CLIENT_CERT', $cert);
 
         $uzi->getDataFromRequest($request);
     }
@@ -128,7 +130,8 @@ final class UziReaderTest extends TestCase
 
         $request = new Request();
         $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
-        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-006-incorrect-san-data.cert'));
+        $cert = file_get_contents(__DIR__ . '/certs/mock-006-incorrect-san-data.cert');
+        $request->server->set('SSL_CLIENT_CERT', $cert);
 
         $uzi->getDataFromRequest($request);
     }
@@ -142,7 +145,16 @@ final class UziReaderTest extends TestCase
         $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-011-correct.cert'));
 
         $user = $uzi->getDataFromRequest($request);
-        $this->assertEquals('{"agb_code":"00000000","card_type":"N","given_name":"john","oid_ca":"2.16.528.1.1003.1.3.5.5.2","role":"30.015","subscriber_number":"90000111","sur_name":"doe-12345678","uzi_number":"12345678","uzi_version":"1"}', json_encode($user));
+
+        $this->assertEquals('00000000', $user->getAgbCode());
+        $this->assertEquals('N', $user->getCardType());
+        $this->assertEquals('john', $user->getGivenName());
+        $this->assertEquals('2.16.528.1.1003.1.3.5.5.2', $user->getOidCa());
+        $this->assertEquals('30.015', $user->getRole());
+        $this->assertEquals('90000111', $user->getSubscriberNumber());
+        $this->assertEquals('doe-12345678', $user->getSurName());
+        $this->assertEquals('12345678', $user->getUziNumber());
+        $this->assertEquals('1', $user->getUziVersion());
     }
 
     public function testCheckValidAdminCert(): void
@@ -154,6 +166,15 @@ final class UziReaderTest extends TestCase
         $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-012-correct-admin.cert'));
 
         $user = $uzi->getDataFromRequest($request);
-        $this->assertEquals('{"agb_code":"00000000","card_type":"N","given_name":"john","oid_ca":"2.16.528.1.1003.1.3.5.5.2","role":"01.015","subscriber_number":"90000111","sur_name":"doe-11111111","uzi_number":"11111111","uzi_version":"1"}', json_encode($user));
+
+        $this->assertEquals('00000000', $user->getAgbCode());
+        $this->assertEquals('N', $user->getCardType());
+        $this->assertEquals('john', $user->getGivenName());
+        $this->assertEquals('2.16.528.1.1003.1.3.5.5.2', $user->getOidCa());
+        $this->assertEquals('01.015', $user->getRole());
+        $this->assertEquals('90000111', $user->getSubscriberNumber());
+        $this->assertEquals('doe-11111111', $user->getSurName());
+        $this->assertEquals('11111111', $user->getUziNumber());
+        $this->assertEquals('1', $user->getUziVersion());
     }
 }

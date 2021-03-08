@@ -2,7 +2,8 @@
 
 namespace MinVWS\PUZI;
 
-class UziUser implements \JsonSerializable {
+class UziUser implements \JsonSerializable
+{
     /** @var string */
     protected $agb_code;
     /** @var string */
