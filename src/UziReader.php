@@ -16,6 +16,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UziReader
 {
+
+    /**
+     * @return UziUser
+     * @throws UziException
+     * @deprecated Use getDataFromRequest instead
+     */
+    public function getData(): UziUser
+    {
+        $request = Request::createFromGlobals();
+        return $this->getDataFromRequest($request);
+    }
+
     /**
      * @param Request $request
      * @return UziUser
