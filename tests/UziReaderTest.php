@@ -142,7 +142,7 @@ final class UziReaderTest extends TestCase
         $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-011-correct.cert'));
 
         $user = $uzi->getDataFromRequest($request);
-        $this->assertJsonStringEqualsJsonString('{"agb_code":"00000000","card_type":"N","given_name":"john","oid_ca":"2.16.528.1.1003.1.3.5.5.2","role":"30.015","subscriber_number":"90000111","sur_name":"doe-12345678","uzi_number":"12345678","uzi_version":"1"}', json_encode($user));
+        $this->assertEquals('{"agb_code":"00000000","card_type":"N","given_name":"john","oid_ca":"2.16.528.1.1003.1.3.5.5.2","role":"30.015","subscriber_number":"90000111","sur_name":"doe-12345678","uzi_number":"12345678","uzi_version":"1"}', json_encode($user));
     }
 
     public function testCheckValidAdminCert(): void
@@ -154,6 +154,6 @@ final class UziReaderTest extends TestCase
         $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-012-correct-admin.cert'));
 
         $user = $uzi->getDataFromRequest($request);
-        $this->assertJsonStringEqualsJsonString('{"agb_code":"00000000","card_type":"N","given_name":"john","oid_ca":"2.16.528.1.1003.1.3.5.5.2","role":"01.015","subscriber_number":"90000111","sur_name":"doe-11111111","uzi_number":"11111111","uzi_version":"1"}', json_encode($user));
+        $this->assertEquals('{"agb_code":"00000000","card_type":"N","given_name":"john","oid_ca":"2.16.528.1.1003.1.3.5.5.2","role":"01.015","subscriber_number":"90000111","sur_name":"doe-11111111","uzi_number":"11111111","uzi_version":"1"}', json_encode($user));
     }
 }
