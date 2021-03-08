@@ -91,6 +91,10 @@ phpseclib - [PHP Secure Communications Library](https://phpseclib.com/)
 
 puzi-laravel - [Laravel wrapper for proficient UZI pass reader](https://github.com/minvws/pUZI-laravel) for Laravel 6, 7 and 8.
 
+## Alternatives
+
+dotnet - [UZI Card Authentication Server](https://github.com/hiddehs/UZI-Card-Authentication)
+
 ## Contributing
 
 1. Fork the Project
