@@ -5,6 +5,7 @@ namespace MinVWS\PUZI\Tests;
 use MinVWS\PUZI\Exceptions\UziException;
 use MinVWS\PUZI\UziReader;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class UziReaderTest.
@@ -18,7 +19,8 @@ final class UziReaderTest extends TestCase
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("Webserver client cert check not passed");
 
-        $uzi->getData();
+        $request = new Request();
+        $uzi->getDataFromRequest($request);
     }
 
     public function testCheckSSLClientFailed(): void
@@ -28,8 +30,10 @@ final class UziReaderTest extends TestCase
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("Webserver client cert check not passed");
 
-        $_SERVER['SSL_CLIENT_VERIFY'] = "failed";
-        $uzi->getData();
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "failed");
+
+        $uzi->getDataFromRequest($request);
     }
 
     public function testCheckNoClientCert(): void
@@ -39,9 +43,10 @@ final class UziReaderTest extends TestCase
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("No client certificate presented");
 
-        $_SERVER['SSL_CLIENT_VERIFY'] = "SUCCESS";
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
 
-        $uzi->getData();
+        $uzi->getDataFromRequest($request);
     }
 
     public function testCheckCertWithoutValidData(): void
@@ -51,10 +56,11 @@ final class UziReaderTest extends TestCase
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("No valid UZI data found");
 
-        $_SERVER['SSL_CLIENT_VERIFY'] = "SUCCESS";
-        $_SERVER['SSL_CLIENT_CERT'] = file_get_contents(__DIR__ . '/certs/mock-001-no-valid-uzi-data.cert');
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-001-no-valid-uzi-data.cert'));
 
-        $uzi->getData();
+        $uzi->getDataFromRequest($request);
     }
 
     public function testCheckCertWithInvalidSAN(): void
@@ -64,10 +70,11 @@ final class UziReaderTest extends TestCase
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("No valid UZI data found");
 
-        $_SERVER['SSL_CLIENT_VERIFY'] = "SUCCESS";
-        $_SERVER['SSL_CLIENT_CERT'] = file_get_contents(__DIR__ . '/certs/mock-002-invalid-san.cert');
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-002-invalid-san.cert'));
 
-        $uzi->getData();
+        $uzi->getDataFromRequest($request);
     }
 
     public function testCheckCertWithInvalidOtherName(): void
@@ -77,10 +84,11 @@ final class UziReaderTest extends TestCase
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("No valid UZI data found");
 
-        $_SERVER['SSL_CLIENT_VERIFY'] = "SUCCESS";
-        $_SERVER['SSL_CLIENT_CERT'] = file_get_contents(__DIR__ . '/certs/mock-003-invalid-othername.cert');
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-003-invalid-othername.cert'));
 
-        $uzi->getData();
+        $uzi->getDataFromRequest($request);
     }
 
     public function testCheckCertWithoutIa5string(): void
@@ -90,10 +98,11 @@ final class UziReaderTest extends TestCase
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("No ia5String");
 
-        $_SERVER['SSL_CLIENT_VERIFY'] = "SUCCESS";
-        $_SERVER['SSL_CLIENT_CERT'] = file_get_contents(__DIR__ . '/certs/mock-004-othername-without-ia5string.cert');
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-004-othername-without-ia5string.cert'));
 
-        $uzi->getData();
+        $uzi->getDataFromRequest($request);
     }
 
     public function testCheckCertIncorrectSanData(): void
@@ -103,10 +112,11 @@ final class UziReaderTest extends TestCase
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("Incorrect SAN found");
 
-        $_SERVER['SSL_CLIENT_VERIFY'] = "SUCCESS";
-        $_SERVER['SSL_CLIENT_CERT'] = file_get_contents(__DIR__ . '/certs/mock-005-incorrect-san-data.cert');
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-005-incorrect-san-data.cert'));
 
-        $uzi->getData();
+        $uzi->getDataFromRequest($request);
     }
 
     public function testCheckCertIncorrectSanData2(): void
@@ -116,51 +126,34 @@ final class UziReaderTest extends TestCase
         $this->expectException(UziException::class);
         $this->expectExceptionMessage("Incorrect SAN found");
 
-        $_SERVER['SSL_CLIENT_VERIFY'] = "SUCCESS";
-        $_SERVER['SSL_CLIENT_CERT'] = file_get_contents(__DIR__ . '/certs/mock-006-incorrect-san-data.cert');
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-006-incorrect-san-data.cert'));
 
-        $uzi->getData();
+        $uzi->getDataFromRequest($request);
     }
 
     public function testCheckValidCert(): void
     {
         $uzi = new UziReader();
 
-        $_SERVER['SSL_CLIENT_VERIFY'] = "SUCCESS";
-        $_SERVER['SSL_CLIENT_CERT'] = file_get_contents(__DIR__ . '/certs/mock-011-correct.cert');
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-011-correct.cert'));
 
-        $data = $uzi->getData();
-        $this->assertEquals([
-            'givenName' => 'john',
-            'surName' => 'doe-12345678',
-            'OidCa' => '2.16.528.1.1003.1.3.5.5.2',
-            'UziVersion' => '1',
-            'UziNumber' => '12345678',
-            'CardType' => 'N',
-            'SubscriberNumber' => '90000111',
-            'Role' => '30.015',
-            'AgbCode' => '00000000',
-        ], $data);
+        $user = $uzi->getDataFromRequest($request);
+        $this->assertJsonStringEqualsJsonString('{"agb_code":"00000000","card_type":"N","given_name":"john","oid_ca":"2.16.528.1.1003.1.3.5.5.2","role":"30.015","subscriber_number":"90000111","sur_name":"doe-12345678","uzi_number":"12345678","uzi_version":"1"}', json_encode($user));
     }
 
     public function testCheckValidAdminCert(): void
     {
         $uzi = new UziReader();
 
-        $_SERVER['SSL_CLIENT_VERIFY'] = "SUCCESS";
-        $_SERVER['SSL_CLIENT_CERT'] = file_get_contents(__DIR__ . '/certs/mock-012-correct-admin.cert');
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-012-correct-admin.cert'));
 
-        $data = $uzi->getData();
-        $this->assertEquals([
-            'givenName' => 'john',
-            'surName' => 'doe-11111111',
-            'OidCa' => '2.16.528.1.1003.1.3.5.5.2',
-            'UziVersion' => '1',
-            'UziNumber' => '11111111',
-            'CardType' => 'N',
-            'SubscriberNumber' => '90000111',
-            'Role' => '01.015',
-            'AgbCode' => '00000000',
-        ], $data);
+        $user = $uzi->getDataFromRequest($request);
+        $this->assertJsonStringEqualsJsonString('{"agb_code":"00000000","card_type":"N","given_name":"john","oid_ca":"2.16.528.1.1003.1.3.5.5.2","role":"01.015","subscriber_number":"90000111","sur_name":"doe-11111111","uzi_number":"11111111","uzi_version":"1"}', json_encode($user));
     }
 }
