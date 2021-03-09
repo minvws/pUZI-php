@@ -177,6 +177,14 @@ class UziUser implements \JsonSerializable
      */
     public function jsonSerialize()
     {
+        return $this->toarray();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function toArray(): array
+    {
         return [
             'agb_code' => $this->getAgbCode(),
             'card_type' => $this->getCardType(),
