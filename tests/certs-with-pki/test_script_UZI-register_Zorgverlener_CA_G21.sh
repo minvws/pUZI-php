@@ -5,7 +5,6 @@ NAMESPACE="intermediate_UZI-register_Zorgverlener_CA_G21"
 openssl genrsa -out ${NAMESPACE}.key 4096
 openssl req -new \
     -key ${NAMESPACE}.key \
-    -subj "/C=NL/O=Fake Staat der Nederlanden/CN=Fake Staat der Nederlanden Private Services CA - G42" \
     -subj "/C=NL/O=CIBG/OID=NTRNL-50000535/CN=UZI-register Zorgverlener CA G21" \
     -nodes \
     -set_serial 0x$(openssl rand -hex 16) \
