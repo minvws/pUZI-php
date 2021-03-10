@@ -1,12 +1,12 @@
 
 I_NAMESPACE="intermediate_private_services_ca"
-NAMESPACE="intermediate_UZI-register_Private_Server_CA"
+NAMESPACE="intermediate_UZI-register_Private_Server_CA_G1"
 
 openssl genrsa -out ${NAMESPACE}.key 4096
 openssl req -new \
     -key ${NAMESPACE}.key \
     -subj "/C=NL/O=Fake Staat der Nederlanden/CN=Fake Staat der Nederlanden Private Services CA - G42" \
-    -subj "/C=NL/O=Fake CIBG/OID=NTRNL-50000535/CN=Fake UZI-register Private Server CA G42" \
+    -subj "/C=NL/O=CIBG/OID=NTRNL-50000535/CN=UZI-register Private Server CA G1" \
     -nodes \
     -set_serial 0x$(openssl rand -hex 16) \
     -out ${NAMESPACE}.csr || exit 1
