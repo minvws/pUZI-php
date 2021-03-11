@@ -13,19 +13,11 @@ openssl req -new \
 openssl req -noout -text -in ${NAMESPACE}.csr
 
 
-cat > ${NAMESPACE}.config <<End-of-message
-[v3_intermediate_uzi]
-basicConstraints = CA:TRUE,pathlen:0
-keyUsage = critical,keyCertSign,cRLSign
-certificatePolicies=1.3.3.7, 2.16.528.1.1003.1.2.8.4, 2.16.528.1.1003.1.2.8.5, @polselect
 
-subjectKeyIdentifier=hash
-authorityKeyIdentifier=keyid,issuer
+CERTTYPE=${CERTTYPE:-vertrouwelijkheidcertificaat}
 
-[polselect]
-policyIdentifier = 2.16.528.1.1003.1.2.8.6
-CPS.1=https://example.org
-End-of-message
+# Run support script to create OpenSSL config
+./test_script_support_create_config.sh
 
 
 openssl x509 -req \
