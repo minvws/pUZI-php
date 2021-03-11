@@ -1,6 +1,6 @@
 
-I_NAMESPACE="intermediate_private_services_ca"
-NAMESPACE="intermediate_UZI-register_Private_Server_CA_G1"
+I_NAMESPACE="private_services_ca_intermediate"
+NAMESPACE="UZI-register_Private_Server_CA_G1_intermediat"
 
 openssl genrsa -out ${NAMESPACE}.key 4096
 openssl req -new \
