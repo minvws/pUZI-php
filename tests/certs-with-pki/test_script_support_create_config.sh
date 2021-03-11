@@ -17,6 +17,7 @@ if [ "${CERTTYPE}" = "authenticiteitcertificaat" ]; then
 cat >> ${NAMESPACE}.config <<End-of-message
 keyUsage = critical,digitalSignature
 extendedKeyUsage = clientAuth, emailProtection, codeSigning
+subjectAltName = otherName:2.5.5.5;IA5STRING:2.16.528.1.1003.1.3.5.5.2-1-11111111-N-90000111-01.015-00000000
 End-of-message
 
 
@@ -27,6 +28,7 @@ elif [ "${CERTTYPE}" = "vertrouwelijkheidcertificaat" ]; then
 cat >> ${NAMESPACE}.config <<End-of-message
 keyUsage = critical,keyEncipherment,dataEncipherment
 extendedKeyUsage = emailProtection, msEFS
+subjectAltName = otherName:2.5.5.5;IA5STRING:2.16.528.1.1003.1.3.5.5.2-1-11111111-N-90000111-01.015-00000000
 End-of-message
 
 
@@ -37,6 +39,7 @@ elif [ "${CERTTYPE}" = "handtekeningcertificaat" ]; then
 cat >> ${NAMESPACE}.config <<End-of-message
 keyUsage = critical,nonRepudiation
 extendedKeyUsage = emailProtection, codeSigning
+subjectAltName = otherName:2.5.5.5;IA5STRING:2.16.528.1.1003.1.3.5.5.2-1-11111111-N-90000111-01.015-00000000
 End-of-message
 
 # In de servercertificaten (services) zijn uitsluitend de DigitalSignatureen
@@ -57,7 +60,6 @@ certificatePolicies=1.3.3.7, 2.16.528.1.1003.1.2.8.4, 2.16.528.1.1003.1.2.8.5, @
 subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid,issuer
 
-subjectAltName = otherName:2.5.5.5;IA5STRING:2.16.528.1.1003.1.3.5.5.2-1-11111111-N-90000111-01.015-00000000
 
 [polselect]
 policyIdentifier = 2.16.528.1.1003.1.2.8.6
