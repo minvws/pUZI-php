@@ -1,6 +1,6 @@
 
-I_NAMESPACE="UZI-register_Medewerker_op_naam_CA_G21_intermediate"
-NAMESPACE="UZI-register_Medewerker_op_naam_CA_G21_GENERIC_USER"
+export I_NAMESPACE="UZI-register_Medewerker_op_naam_CA_G21_intermediate"
+export NAMESPACE="UZI-register_Medewerker_op_naam_CA_G21_GENERIC_USER"
 
 openssl genrsa -out ${NAMESPACE}.key 4096
 openssl req -new \
@@ -14,7 +14,7 @@ openssl req -noout -text -in ${NAMESPACE}.csr
 
 
 
-CERTTYPE=${CERTTYPE:-vertrouwelijkheidcertificaat}
+export CERTTYPE=${CERTTYPE:-vertrouwelijkheidcertificaat}
 
 # Run support script to create OpenSSL config
 ./test_script_support_create_config.sh
