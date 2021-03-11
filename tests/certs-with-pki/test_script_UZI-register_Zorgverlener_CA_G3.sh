@@ -1,6 +1,6 @@
 
-I_NAMESPACE="intermediate_private_services_ca"
-NAMESPACE="intermediate_UZI-register_Zorgverlener_CA_G3"
+I_NAMESPACE="private_services_ca_intermediate"
+NAMESPACE="UZI-register_Zorgverlener_CA_G3_intermediate"
 
 openssl genrsa -out ${NAMESPACE}.key 4096
 openssl req -new \

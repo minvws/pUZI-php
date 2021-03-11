@@ -1,11 +1,11 @@
 
-I_NAMESPACE="intermediate_private_services_ca"
-NAMESPACE="intermediate_UZI-register_Medewerker_op_naam_CA_G21"
+I_NAMESPACE="UZI-register_Medewerker_op_naam_CA_G21_intermediate"
+NAMESPACE="UZI-register_Medewerker_op_naam_CA_G21_GENERIC_USER"
 
 openssl genrsa -out ${NAMESPACE}.key 4096
 openssl req -new \
     -key ${NAMESPACE}.key \
-    -subj "/C=NL/O=CIBG/OID=NTRNL-50000535/CN=UZI-register Medewerker op naam CA G21" \
+    -subj "/C=NL/O=GBIC/serialNumber=1337/SN=${SURNAME:-Zorg}/GN=${GIVENNAME:-Jan}/CN=${GIVENNAME:-Jan} ${SURNAME:-Zorg}" \
     -nodes \
     -set_serial 0x$(openssl rand -hex 16) \
     -out ${NAMESPACE}.csr || exit 1
