@@ -1,3 +1,4 @@
+#!/bin/bash
 
 I_NAMESPACE="private_services_ca_intermediate"
 NAMESPACE="UZI-register_Medewerker_niet_op_naam_CA_G21_intermediate"
