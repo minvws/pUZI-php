@@ -1,4 +1,5 @@
 
+export I_NAMESPACE="Fake_Staat_der_Nederlanden_CA"
 export NAMESPACE="private_services_ca_intermediate"
 
 openssl genrsa -out ${NAMESPACE}.key 4096
@@ -29,8 +30,8 @@ End-of-message
 
 openssl x509 -req \
     -in ${NAMESPACE}.csr \
-    -CA root.pem \
-    -CAkey root.key \
+    -CA ${I_NAMESPACE}.pem \
+    -CAkey ${I_NAMESPACE}.key \
     -CAcreateserial \
     -days 899 \
     -set_serial 0x$(openssl rand -hex 16) \
