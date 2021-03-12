@@ -1,10 +1,6 @@
 #!/bin/bash
 
 
-echo "Running... $0"
-echo " => $CERTTYPE"
-echo " => $NAMESPACE"
-
 # Set a default to: authenticiteitcertificaat
 CERTTYPE=${CERTTYPE:-vertrouwelijkheidcertificaat}
 
