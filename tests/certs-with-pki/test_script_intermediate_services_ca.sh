@@ -1,5 +1,5 @@
 
-NAMESPACE="private_services_ca_intermediate"
+export NAMESPACE="private_services_ca_intermediate"
 
 openssl genrsa -out ${NAMESPACE}.key 4096
 openssl req -new \

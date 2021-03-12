@@ -1,6 +1,6 @@
 
-I_NAMESPACE="private_services_ca_intermediate"
-NAMESPACE="UZI-register_Medewerker_niet_op_naam_CA_G3_intermediate"
+export I_NAMESPACE="private_services_ca_intermediate"
+export NAMESPACE="UZI-register_Medewerker_niet_op_naam_CA_G3_intermediate"
 
 openssl genrsa -out ${NAMESPACE}.key 4096
 openssl req -new \
