@@ -5,7 +5,7 @@ NAMESPACE="UZI-register_Private_Server_CA_G1_intermediate"
 openssl genrsa -out ${NAMESPACE}.key 4096
 openssl req -new \
     -key ${NAMESPACE}.key \
-    -subj "/C=NL/O=CIBG/OID=NTRNL-50000535/CN=UZI-register Private Server CA G1" \
+    -subj "/C=NL/O=GBIC/OID=NTRNL-50000535/CN=UZI-register Private Server CA G1" \
     -nodes \
     -set_serial 0x$(openssl rand -hex 16) \
     -out ${NAMESPACE}.csr || exit 1
@@ -14,7 +14,7 @@ openssl req -noout -text -in ${NAMESPACE}.csr
 
 
 cat > ${NAMESPACE}.config <<End-of-message
-[v3_intermediate_uzi]
+[v3_main]
 basicConstraints = CA:TRUE,pathlen:0
 keyUsage = critical,keyCertSign,cRLSign
 certificatePolicies=1.3.3.7, 2.16.528.1.1003.1.2.8.4, 2.16.528.1.1003.1.2.8.5, @polselect
@@ -35,7 +35,7 @@ openssl x509 -req \
     -CAcreateserial \
     -days 898 \
     -set_serial 0x$(openssl rand -hex 16) \
-    -extensions v3_intermediate_uzi \
+    -extensions v3_main \
     -extfile ${NAMESPACE}.config \
     -out ${NAMESPACE}.pem || exit 1
 

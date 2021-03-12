@@ -53,6 +53,7 @@ elif [ "${CERTTYPE}" = "servercertificaat" ]; then
 cat >> ${NAMESPACE}.config <<End-of-message
 keyUsage = critical,digitalSignature,keyEncipherment
 extendedKeyUsage = clientAuth, serverAuth
+subjectAltName = DNS:${SUBJECT_ALT_NAME}
 End-of-message
 
 fi
