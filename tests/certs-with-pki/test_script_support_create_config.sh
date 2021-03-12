@@ -10,7 +10,7 @@ CERTTYPE=${CERTTYPE:-vertrouwelijkheidcertificaat}
 
 
 cat > ${NAMESPACE}.config <<End-of-message
-[v3_uzi_zorgverlener]
+[uzi_main]
 basicConstraints = critical,CA:FALSE
 End-of-message
 
