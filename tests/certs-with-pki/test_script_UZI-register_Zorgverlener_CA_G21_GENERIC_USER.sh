@@ -29,7 +29,7 @@ openssl x509 -req \
     -CAcreateserial \
     -days 888 \
     -set_serial 0x$(openssl rand -hex 16) \
-    -extensions v3_uzi_zorgverlener \
+    -extensions uzi_main \
     -extfile ${NAMESPACE}.config \
     -out ${NAMESPACE}.pem || exit 1
 
