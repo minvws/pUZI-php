@@ -1,3 +1,4 @@
+#!/bin/bash
 
 export I_NAMESPACE="Fake_Staat_der_Nederlanden_CA"
 export NAMESPACE="private_services_ca_intermediate"

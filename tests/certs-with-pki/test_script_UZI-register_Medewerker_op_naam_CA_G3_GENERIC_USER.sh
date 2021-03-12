@@ -1,3 +1,4 @@
+#!/bin/bash
 
 export I_NAMESPACE="UZI-register_Medewerker_op_naam_CA_G3_intermediate"
 export NAMESPACE="UZI-register_Medewerker_op_naam_CA_G3_GENERIC_USER"
@@ -18,7 +19,6 @@ openssl req -noout -text -in ${NAMESPACE}.csr
 export CERTTYPE=${CERTTYPE:-vertrouwelijkheidcertificaat}
 
 # Run support script to create OpenSSL config
-echo "-------------------------------------------------------------------------------------------------"
 bash test_script_support_create_config.sh
 
 

@@ -1,3 +1,4 @@
+#!/bin/bash
 
 export I_NAMESPACE="private_services_ca_intermediate"
 export NAMESPACE="UZI-register_Private_Server_CA_G1_intermediate"

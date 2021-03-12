@@ -1,3 +1,4 @@
+#!/bin/bash
 
 export I_NAMESPACE="UZI-register_Medewerker_op_naam_CA_G21_intermediate"
 export NAMESPACE="UZI-register_Medewerker_op_naam_CA_G21_GENERIC_USER"

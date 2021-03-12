@@ -1,3 +1,4 @@
+#!/bin/bash
 
 export I_NAMESPACE="private_services_ca_intermediate"
 export NAMESPACE="UZI-register_Zorgverlener_CA_G21_intermediate"
