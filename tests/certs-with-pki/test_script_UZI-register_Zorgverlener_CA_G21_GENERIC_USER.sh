@@ -8,7 +8,7 @@ export GIVENNAME="${GIVENNAME:-Jan}"
 export SURNAME="${SURNAME:-Zorg}"
 
 export I_NAMESPACE="UZI-register_Zorgverlener_CA_G21_intermediate"
-export NAMESPACE="UZI-register_Zorgverlener_CA_G21_GENERIC_USER_${SERIALNUMBER}_${TITLE}_${GIVENNAME}_${SURNAME}"
+export NAMESPACE="UZI-register_Zorgverlener_CA_G21_GENERIC_USER_${PASSTYPE}_${CERTTYPE}_${SERIALNUMBER}_${TITLE}_${GIVENNAME}_${SURNAME}"
 
 
 openssl genrsa -out "${NAMESPACE}.key" 4096
