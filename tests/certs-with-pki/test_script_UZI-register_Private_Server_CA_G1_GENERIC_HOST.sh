@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export I_NAMESPACE="UZI-register_Private_Server_CA_G1_intermediate"
-export NAMESPACE="UZI-register_Private_Server_CA_G1_GENERIC_HOST"
+export NAMESPACE="UZI-register_Private_Server_CA_G1_GENERIC_HOST_${CERTTYPE}"
 
 export SUBJECT_ALT_NAME=${SUBJECT_ALT_NAME:-host.example.org}
 
