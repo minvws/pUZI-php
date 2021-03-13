@@ -41,12 +41,12 @@ for CERTTYPE in ${CERTTYPES[*]}; do
 
     # Title
     export TITLE="Arts"
- 
-    AANSPREEKTITLES=("Apotheker" "Arts" "Fysiotherapeut" 
-                     "Gezondheidszorgpsycholoog" "Psychotherapeut" 
-                     "Tandarts" "Verloskundige" "Verpleegkundige" 
+
+    AANSPREEKTITLES=("Apotheker" "Arts" "Fysiotherapeut"
+                     "Gezondheidszorgpsycholoog" "Psychotherapeut"
+                     "Tandarts" "Verloskundige" "Verpleegkundige"
                      "Physician assistant" "Orthopedagoog -generalist")
-    for TITLE in ${AANSPREEKTITLES[*]}; do
+    for TITLE in "${AANSPREEKTITLES[@]}"; do
         echo "TITLE: ${TITLE}"
         export TITLE
 
