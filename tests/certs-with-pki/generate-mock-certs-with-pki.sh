@@ -29,7 +29,17 @@ export CERTTYPE="servercertificaat"
 ./test_script_UZI-register_Private_Server_CA_G1_GENERIC_HOST.sh || exit 1
 
 
-# Loop the certificate types for clients
+# Loop the certificate types for clients - only two types for 'Niet op naam'
+CERTTYPES=("authenticiteitcertificaat" "vertrouwelijkheidcertificaat")
+for CERTTYPE in ${CERTTYPES[*]}; do
+    echo "##### CERTTYPE: ${CERTTYPE}"
+    export CERTTYPE
+
+    ./test_script_UZI-register_Medewerker_niet_op_naam_CA_G21_GENERIC_USER.sh || exit 1
+    ./test_script_UZI-register_Medewerker_niet_op_naam_CA_G3_GENERIC_USER.sh || exit 1
+done
+
+# Loop the certificate types for clients - all three types for 'Medewerker op naam' en Zorgverlener
 CERTTYPES=("authenticiteitcertificaat" "vertrouwelijkheidcertificaat" "handtekeningcertificaat")
 for CERTTYPE in ${CERTTYPES[*]}; do
     echo "##### CERTTYPE: ${CERTTYPE}"
@@ -37,8 +47,6 @@ for CERTTYPE in ${CERTTYPES[*]}; do
 
     ./test_script_UZI-register_Medewerker_op_naam_CA_G21_GENERIC_USER.sh || exit 1
     ./test_script_UZI-register_Medewerker_op_naam_CA_G3_GENERIC_USER.sh || exit 1
-    ./test_script_UZI-register_Medewerker_niet_op_naam_CA_G21_GENERIC_USER.sh || exit 1
-    ./test_script_UZI-register_Medewerker_niet_op_naam_CA_G3_GENERIC_USER.sh || exit 1
 
 
     # Aanspreektitle, source for /title= field in Subject DN
