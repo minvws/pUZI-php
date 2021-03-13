@@ -69,12 +69,12 @@ OTHERNAME_SUBJECT_ID+="-${OTHERNAME_SUBJECT_ID_AGB}"
 
 cat > "${NAMESPACE}.config" <<End-of-message
 [polselect]
-policyIdentifier = 2.16.528.1.1003.1.2.8.6
+policyIdentifier = ${OTHERNAME_SUBJECT_ID_OID_CA}
 CPS.1=https://example.org
 
 [uzi_main]
 basicConstraints = critical,CA:FALSE
-certificatePolicies=1.3.3.7, 2.16.528.1.1003.1.2.8.4, 2.16.528.1.1003.1.2.8.5, @polselect
+certificatePolicies=1.3.3.7, @polselect
 
 subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid,issuer
@@ -84,8 +84,6 @@ End-of-message
 # In authenticiteitcertificaten is uitsluitend het digitalSignature bit
 # opgenomen.
 if [ "${CERTTYPE}" = "authenticiteitcertificaat" ]; then
-
-
 
 cat >> "${NAMESPACE}.config" <<End-of-message
 keyUsage = critical,digitalSignature
@@ -147,7 +145,7 @@ subjectAltName = @alt_names
 [alt_names]
 DNS = ${SUBJECT_ALT_NAME}
 # subjectAltName = otherName:2.5.5.5;IA5STRING:2.16.528.1.1003.1.3.5.5.2-1-11111111-N-90000111-01.015-00000000
-otherName = 2.5.5.5;IA5STRING:${OTHERNAME_SUBJECT_ID_OID_CA}-${OTHERNAME_SUBJECT_ID}
+# otherName = 2.5.5.5;IA5STRING:${OTHERNAME_SUBJECT_ID_OID_CA}-${OTHERNAME_SUBJECT_ID}
 End-of-message
 
 fi
