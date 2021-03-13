@@ -186,7 +186,7 @@ for CERTTYPE in ${CERTTYPES[*]}; do
         export TITLE="$VALUE"
 
         # Apotheker
-        if ["${TITLE}" = "Apotheker"]; then
+        if [ "${TITLE}" = "Apotheker" ]; then
             for SP_KEY_VALUE in "${APOTHEKER_SPECIALISMS[@]}"; do
                 # Cut the Key Value
                 KEY=$(echo "$SP_KEY_VALUE" | cut -d"_" -f 2)
@@ -201,7 +201,7 @@ for CERTTYPE in ${CERTTYPES[*]}; do
             done
 
         # Arts
-        elif ["${TITLE}" = "Arts"]; then
+        elif [ "${TITLE}" = "Arts" ]; then
             for SP_KEY_VALUE in "${ARTS_SPECIALISMS[@]}"; do
                 # Cut the Key Value
                 KEY=$(echo "$SP_KEY_VALUE" | cut -d"_" -f 2)
@@ -216,7 +216,7 @@ for CERTTYPE in ${CERTTYPES[*]}; do
             done
 
         # Gezondheidszorgpsycholoog
-        elif ["${TITLE}" = "Gezondheidszorgpsycholoog"]; then
+        elif [ "${TITLE}" = "Gezondheidszorgpsycholoog" ]; then
             for SP_KEY_VALUE in "${GEZONDHEIDSZORGPSYCHOLOOG_SPECIALISMS[@]}"; do
                 # Cut the Key Value
                 KEY=$(echo "$SP_KEY_VALUE" | cut -d"_" -f 2)
@@ -230,8 +230,8 @@ for CERTTYPE in ${CERTTYPES[*]}; do
                 ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
             done
 
-        # Tandarts 
-        elif ["${TITLE}" = "Tandarts"]; then
+        # Tandarts
+        elif [ "${TITLE}" = "Tandarts" ]; then
             for SP_KEY_VALUE in "${TANDARTS_SPECIALISMS[@]}"; do
                 # Cut the Key Value
                 KEY=$(echo "$SP_KEY_VALUE" | cut -d"_" -f 2)
@@ -245,8 +245,8 @@ for CERTTYPE in ${CERTTYPES[*]}; do
                 ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
             done
 
-        # Verpleegkundige 
-        elif ["${TITLE}" = "Verpleegkundige"]; then
+        # Verpleegkundige
+        elif [ "${TITLE}" = "Verpleegkundige" ]; then
             for SP_KEY_VALUE in "${VERPLEEGKUNDIGE_SPECIALISMS[@]}"; do
                 # Cut the Key Value
                 KEY=$(echo "$SP_KEY_VALUE" | cut -d"_" -f 2)
