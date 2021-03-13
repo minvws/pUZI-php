@@ -24,7 +24,7 @@ subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid,issuer
 
 [polselect]
-policyIdentifier = 2.16.528.1.1003.1.2.8.6
+policyIdentifier = 2.16.528.1.1003.1.2.8.4
 CPS.1=https://example.org
 End-of-message
 
