@@ -14,7 +14,7 @@ export NAMESPACE="UZI-register_Zorgverlener_CA_G21_GENERIC_USER_${SERIALNUMBER}_
 openssl genrsa -out "${NAMESPACE}.key" 4096
 openssl req -new \
     -key ${NAMESPACE}.key \
-    -subj "/C=NL/O=GBIC/serialNumber=${SERIALNUMBER}/TITLE=${TITLE}/SN=${SURNAME}/GN=${GIVENNAME}/CN=${GIVENNAME} ${SURNAME}" \
+    -subj "/C=NL/O=GBIC/serialNumber=${SERIALNUMBER}/title=${TITLE}/SN=${SURNAME}/GN=${GIVENNAME}/CN=${GIVENNAME} ${SURNAME}" \
     -nodes \
     -set_serial 0x$(openssl rand -hex 16) \
     -out ${NAMESPACE}.csr || exit 1
