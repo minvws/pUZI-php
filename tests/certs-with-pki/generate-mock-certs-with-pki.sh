@@ -40,15 +40,27 @@ for CERTTYPE in ${CERTTYPES[*]}; do
     ./test_script_UZI-register_Medewerker_niet_op_naam_CA_G3_GENERIC_USER.sh || exit 1
 
     # Title
-    export TITLE="Arts"
+    AANSPREEKTITLES["01"]="Arts"
+    AANSPREEKTITLES["02"]="Tandarts"
+    AANSPREEKTITLES["03"]="Verloskundige"
+    AANSPREEKTITLES["04"]="Fysiotherapeut"
+    AANSPREEKTITLES["16"]="Psychotherapeut"
+    AANSPREEKTITLES["17"]="Apotheker"
+    AANSPREEKTITLES["25"]="Gezondheidszorgpsycholoog"
+    AANSPREEKTITLES["30"]="Verpleegkundige"
+    AANSPREEKTITLES["31"]="Orthopedagoog –generalist"
+    AANSPREEKTITLES["81"]="Physician assistant"
 
-    AANSPREEKTITLES=("Apotheker" "Arts" "Fysiotherapeut"
-                     "Gezondheidszorgpsycholoog" "Psychotherapeut"
-                     "Tandarts" "Verloskundige" "Verpleegkundige"
-                     "Physician assistant" "Orthopedagoog -generalist")
-    for TITLE in "${AANSPREEKTITLES[@]}"; do
-        echo "TITLE: ${TITLE}"
+#    AANSPREEKTITLES=("Apotheker" "Arts" "Fysiotherapeut"
+#                     "Gezondheidszorgpsycholoog" "Psychotherapeut"
+#                     "Tandarts" "Verloskundige" "Verpleegkundige"
+#                     "Physician assistant" "Orthopedagoog -generalist")
+
+    for TITLE_CODE in "${!AANSPREEKTITLES[@]}"; do
+        TITLE="${AANSPREEKTITLES[${TITLE_CODE}]}"
+        echo "TITLE: ${TITLE} (${TITLE_CODE}"
         export TITLE
+        export TITLE_CODE
 
         ./test_script_UZI-register_Zorgverlener_CA_G21_GENERIC_USER.sh || exit 1
         ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
