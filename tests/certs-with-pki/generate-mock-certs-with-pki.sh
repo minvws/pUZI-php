@@ -72,66 +72,66 @@ for CERTTYPE in ${CERTTYPES[*]}; do
 
     # Specialismen bij art. 3 beroepen
     # Apotheker
-    AANSPREEKTITLES+=("KEY_060__VALUE_Ziekenhuisapotheker")
-    AANSPREEKTITLES+=("KEY_075__VALUE_Openbaar apotheker (Openbare Farmacie)")
+    SPECIALISMS+=("KEY_060__VALUE_Ziekenhuisapotheker")
+    SPECIALISMS+=("KEY_075__VALUE_Openbaar apotheker (Openbare Farmacie)")
 
     # Arts
-    AANSPREEKTITLES+=("KEY_002__VALUE_Allergoloog (gesloten register)")
-    AANSPREEKTITLES+=("KEY_003__VALUE_Anesthesioloog")
-    AANSPREEKTITLES+=("KEY_004__VALUE_Apotheekhoudend huisarts")
-    AANSPREEKTITLES+=("KEY_020__VALUE_Arts klinische chemie (gesloten register)")
-    AANSPREEKTITLES+=("KEY_055__VALUE_Arts maatschappij en gezondheid")
-    AANSPREEKTITLES+=("KEY_013__VALUE_Arts v. maag-darm-leverziekten")
-    AANSPREEKTITLES+=("KEY_056__VALUE_Arts voor verstandelijk gehandicapten")
-    AANSPREEKTITLES+=("KEY_024__VALUE_Arts-microbioloog")
-    AANSPREEKTITLES+=("KEY_008__VALUE_Bedrijfsarts")
-    AANSPREEKTITLES+=("KEY_010__VALUE_Cardioloog")
-    AANSPREEKTITLES+=("KEY_011__VALUE_Cardiothoracaal chirurg")
-    AANSPREEKTITLES+=("KEY_014__VALUE_Chirurg")
-    AANSPREEKTITLES+=("KEY_012__VALUE_Dermatoloog")
-    AANSPREEKTITLES+=("KEY_046__VALUE_Gynaecoloog")
-    AANSPREEKTITLES+=("KEY_015__VALUE_Huisarts")
-    AANSPREEKTITLES+=("KEY_016__VALUE_Internist")
-    AANSPREEKTITLES+=("KEY_062__VALUE_Internist-allergoloog (gesloten register)")
-    AANSPREEKTITLES+=("KEY_070__VALUE_Jeugdarts")
-    AANSPREEKTITLES+=("KEY_018__VALUE_Keel- neus- oorarts")
-    AANSPREEKTITLES+=("KEY_019__VALUE_Kinderarts")
-    AANSPREEKTITLES+=("KEY_021__VALUE_Klinisch geneticus")
-    AANSPREEKTITLES+=("KEY_022__VALUE_Klinisch geriater")
-    AANSPREEKTITLES+=("KEY_023__VALUE_Longarts")
-    AANSPREEKTITLES+=("KEY_025__VALUE_Neurochirurg")
-    AANSPREEKTITLES+=("KEY_026__VALUE_Neuroloog")
-    AANSPREEKTITLES+=("KEY_030__VALUE_Nucleair geneeskundige")
-    AANSPREEKTITLES+=("KEY_031__VALUE_Oogarts")
-    AANSPREEKTITLES+=("KEY_032__VALUE_Orthopedisch chirurg")
-    AANSPREEKTITLES+=("KEY_033__VALUE_Patholoog")
-    AANSPREEKTITLES+=("KEY_034__VALUE_Plastisch chirurg")
-    AANSPREEKTITLES+=("KEY_035__VALUE_Psychiater")
-    AANSPREEKTITLES+=("KEY_039__VALUE_Radioloog")
-    AANSPREEKTITLES+=("KEY_040__VALUE_Radiotherapeut")
-    AANSPREEKTITLES+=("KEY_041__VALUE_Reumatoloog")
-    AANSPREEKTITLES+=("KEY_042__VALUE_Revalidatiearts")
-    AANSPREEKTITLES+=("KEY_047__VALUE_Specialist ouderengeneeskunde")
-    AANSPREEKTITLES+=("KEY_071__VALUE_Spoedeisende hulp arts")
-    AANSPREEKTITLES+=("KEY_074__VALUE_Sportarts")
-    AANSPREEKTITLES+=("KEY_045__VALUE_Uroloog")
-    AANSPREEKTITLES+=("KEY_048__VALUE_Verzekeringsarts")
-    AANSPREEKTITLES+=("KEY_050__VALUE_Zenuwarts (gesloten register)")
+    SPECIALISMS+=("KEY_002__VALUE_Allergoloog (gesloten register)")
+    SPECIALISMS+=("KEY_003__VALUE_Anesthesioloog")
+    SPECIALISMS+=("KEY_004__VALUE_Apotheekhoudend huisarts")
+    SPECIALISMS+=("KEY_020__VALUE_Arts klinische chemie (gesloten register)")
+    SPECIALISMS+=("KEY_055__VALUE_Arts maatschappij en gezondheid")
+    SPECIALISMS+=("KEY_013__VALUE_Arts v. maag-darm-leverziekten")
+    SPECIALISMS+=("KEY_056__VALUE_Arts voor verstandelijk gehandicapten")
+    SPECIALISMS+=("KEY_024__VALUE_Arts-microbioloog")
+    SPECIALISMS+=("KEY_008__VALUE_Bedrijfsarts")
+    SPECIALISMS+=("KEY_010__VALUE_Cardioloog")
+    SPECIALISMS+=("KEY_011__VALUE_Cardiothoracaal chirurg")
+    SPECIALISMS+=("KEY_014__VALUE_Chirurg")
+    SPECIALISMS+=("KEY_012__VALUE_Dermatoloog")
+    SPECIALISMS+=("KEY_046__VALUE_Gynaecoloog")
+    SPECIALISMS+=("KEY_015__VALUE_Huisarts")
+    SPECIALISMS+=("KEY_016__VALUE_Internist")
+    SPECIALISMS+=("KEY_062__VALUE_Internist-allergoloog (gesloten register)")
+    SPECIALISMS+=("KEY_070__VALUE_Jeugdarts")
+    SPECIALISMS+=("KEY_018__VALUE_Keel- neus- oorarts")
+    SPECIALISMS+=("KEY_019__VALUE_Kinderarts")
+    SPECIALISMS+=("KEY_021__VALUE_Klinisch geneticus")
+    SPECIALISMS+=("KEY_022__VALUE_Klinisch geriater")
+    SPECIALISMS+=("KEY_023__VALUE_Longarts")
+    SPECIALISMS+=("KEY_025__VALUE_Neurochirurg")
+    SPECIALISMS+=("KEY_026__VALUE_Neuroloog")
+    SPECIALISMS+=("KEY_030__VALUE_Nucleair geneeskundige")
+    SPECIALISMS+=("KEY_031__VALUE_Oogarts")
+    SPECIALISMS+=("KEY_032__VALUE_Orthopedisch chirurg")
+    SPECIALISMS+=("KEY_033__VALUE_Patholoog")
+    SPECIALISMS+=("KEY_034__VALUE_Plastisch chirurg")
+    SPECIALISMS+=("KEY_035__VALUE_Psychiater")
+    SPECIALISMS+=("KEY_039__VALUE_Radioloog")
+    SPECIALISMS+=("KEY_040__VALUE_Radiotherapeut")
+    SPECIALISMS+=("KEY_041__VALUE_Reumatoloog")
+    SPECIALISMS+=("KEY_042__VALUE_Revalidatiearts")
+    SPECIALISMS+=("KEY_047__VALUE_Specialist ouderengeneeskunde")
+    SPECIALISMS+=("KEY_071__VALUE_Spoedeisende hulp arts")
+    SPECIALISMS+=("KEY_074__VALUE_Sportarts")
+    SPECIALISMS+=("KEY_045__VALUE_Uroloog")
+    SPECIALISMS+=("KEY_048__VALUE_Verzekeringsarts")
+    SPECIALISMS+=("KEY_050__VALUE_Zenuwarts (gesloten register)")
 
     # Gezondheidszorgpsycholoog
-    AANSPREEKTITLES+=("KEY_063__VALUE_Klinisch neuropsycholoog")
-    AANSPREEKTITLES+=("KEY_061__VALUE_Klinisch psycholoog")
+    SPECIALISMS+=("KEY_063__VALUE_Klinisch neuropsycholoog")
+    SPECIALISMS+=("KEY_061__VALUE_Klinisch psycholoog")
 
     # Tandarts
-    AANSPREEKTITLES+=("KEY_053__VALUE_Orthodontist")
-    AANSPREEKTITLES+=("KEY_054__VALUE_Kaakchirurg")
+    SPECIALISMS+=("KEY_053__VALUE_Orthodontist")
+    SPECIALISMS+=("KEY_054__VALUE_Kaakchirurg")
 
     # Verpleegkundige
-    AANSPREEKTITLES+=("KEY_066__VALUE_Verpl. spec. acute zorg bij som. aandoeningen")
-    AANSPREEKTITLES+=("KEY_068__VALUE_Verpl. spec. chronische zorg bij som. aandoeningen")
-    AANSPREEKTITLES+=("KEY_069__VALUE_Verpl. spec. geestelijke gezondheidszorg")
-    AANSPREEKTITLES+=("KEY_067__VALUE_Verpl. spec. intensieve zorg bij som. aandoeningen")
-    AANSPREEKTITLES+=("KEY_065__VALUE_Verpl. spec. prev. zorg bij som. aandoeningen")
+    SPECIALISMS+=("KEY_066__VALUE_Verpl. spec. acute zorg bij som. aandoeningen")
+    SPECIALISMS+=("KEY_068__VALUE_Verpl. spec. chronische zorg bij som. aandoeningen")
+    SPECIALISMS+=("KEY_069__VALUE_Verpl. spec. geestelijke gezondheidszorg")
+    SPECIALISMS+=("KEY_067__VALUE_Verpl. spec. intensieve zorg bij som. aandoeningen")
+    SPECIALISMS+=("KEY_065__VALUE_Verpl. spec. prev. zorg bij som. aandoeningen")
 
     # Artikel 34 Wet BIG: opleidingstitels
     AANSPREEKTITLES+=("KEY_83__VALUE_Apothekersassistent")
@@ -160,20 +160,32 @@ for CERTTYPE in ${CERTTYPES[*]}; do
     AANSPREEKTITLES+=("KEY_99__VALUE_Zorgverlener andere zorg")
 
 
-    for KEY_VALUE in "${AANSPREEKTITLES[@]}"; do
+    for AT_KEY_VALUE in "${AANSPREEKTITLES[@]}"; do
         # Cut the Key Value
-        KEY=$(echo "$KEY_VALUE" | cut -d"_" -f 2)
-        VALUE=$(echo "$KEY_VALUE" | cut -d"_" -f 5-)
+        KEY=$(echo "$AT_KEY_VALUE" | cut -d"_" -f 2)
+        VALUE=$(echo "$AT_KEY_VALUE" | cut -d"_" -f 5-)
 
         TITLE_CODE="$KEY"
         TITLE="$VALUE"
 
-        echo "##### TITLE: ${TITLE} (${TITLE_CODE})"
-        export TITLE
-        export TITLE_CODE
+        for SP_KEY_VALUE in "${SPECIALISMS[@]}"; do
+            # Cut the Key Value
+            KEY=$(echo "$SP_KEY_VALUE" | cut -d"_" -f 2)
+            VALUE=$(echo "$SP_KEY_VALUE" | cut -d"_" -f 5-)
 
-        ./test_script_UZI-register_Zorgverlener_CA_G21_GENERIC_USER.sh || exit 1
-        ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
+            SPECI_CODE="$KEY"
+            SPECIALISM="$VALUE"
+
+
+            echo "##### TITLE: ${TITLE} (${TITLE_CODE}), Specialism: ${SPECIALISM} (${SPECI_CODE})"
+            export TITLE
+            export TITLE_CODE
+            export SPECI_CODE
+            export SPECIALISM
+
+            ./test_script_UZI-register_Zorgverlener_CA_G21_GENERIC_USER.sh || exit 1
+            ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
+        done
     done
 done
 
