@@ -11,7 +11,6 @@ export I_NAMESPACE="UZI-register_Zorgverlener_CA_G3_intermediate"
 export NAMESPACE="UZI-register_Zorgverlener_CA_G3_GENERIC_USER_${SERIALNUMBER}_${TITLE}_${GIVENNAME}_${SURNAME}"
 
 
-echo ${NAMESPACE}.key
 openssl genrsa -out "${NAMESPACE}.key" 4096
 openssl req -new \
     -key "${NAMESPACE}.key" \

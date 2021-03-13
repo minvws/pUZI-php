@@ -157,6 +157,7 @@ CERTTYPE="servercertificaat"`
 - Verpleegkundige (30)
 - Physician assistant (81)
 - Orthopedagoog –generalist (31)
+- ... and all other specialisms and other forms.
 
 ### Certificate type (var: CERTTYPE)
 - authenticiteitcertificaat
