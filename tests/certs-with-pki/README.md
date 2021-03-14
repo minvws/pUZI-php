@@ -134,18 +134,6 @@ CERTTYPE="servercertificaat"
 ./test_script_UZI-register_Private_Server_CA_G1_GENERIC_HOST.sh  
 ```
 
-## Support script to create various OpenSSL config files
-Options CERTTYPE:
-- authenticiteitcertificaat
-- vertrouwelijkheidcertificaat
-- handtekeningcertificaat  
-- servercertificaat 
-```bash
-CERTTYPE="servercertificaat"`  
-./test_script_support_create_config.sh
-```
-
-
 ### Aanspreektitel (var: TITLE)
 - Apotheker (17)
 - Arts (01)
