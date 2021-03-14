@@ -185,6 +185,19 @@ for CERTTYPE in ${CERTTYPES[*]}; do
         export TITLE_CODE="$KEY"
         export TITLE="$VALUE"
 
+
+        # Generic title, without specialisms. Also needed for title without any
+        # specialism.
+
+        # Clean specialisms
+        unset SPECI_CODE
+        unset SPECIALISM
+
+        echo "##### TITLE: ${TITLE} (${TITLE_CODE}), Specialism: None"
+        ./test_script_UZI-register_Zorgverlener_CA_G21_GENERIC_USER.sh || exit 1
+        ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
+
+
         # Apotheker
         if [ "${TITLE}" = "Apotheker" ]; then
             for SP_KEY_VALUE in "${APOTHEKER_SPECIALISMS[@]}"; do
@@ -259,16 +272,6 @@ for CERTTYPE in ${CERTTYPES[*]}; do
                 ./test_script_UZI-register_Zorgverlener_CA_G21_GENERIC_USER.sh || exit 1
                 ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
             done
-
-        # No Specialisms
-        else
-            # Remove specialisms
-            unset SPECI_CODE
-            unset SPECIALISM
-
-            echo "##### TITLE: ${TITLE} (${TITLE_CODE}), Specialism: None"
-            ./test_script_UZI-register_Zorgverlener_CA_G21_GENERIC_USER.sh || exit 1
-            ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
         fi
     done
 done
