@@ -22,7 +22,9 @@ openssl req -noout -subject -in "${NAMESPACE}.csr"
 export CERTTYPE=${CERTTYPE:-vertrouwelijkheidcertificaat}
 
 # Run support script to create OpenSSL config
-bash test_script_support_create_config.sh
+#./test_script_support_create_config.sh
+create_openssl_config_UZI_EEC
+
 
 
 # Assuming all variables are available
