@@ -3,7 +3,7 @@
 export I_NAMESPACE="UZI-register_Medewerker_niet_op_naam_CA_G3_intermediate"
 export NAMESPACE="UZI-register_Medewerker_niet_op_naam_CA_G3_GENERIC_USER_${CERTTYPE}"
 
-openssl genrsa -out ${NAMESPACE}.key 4096
+openssl genrsa -out ${NAMESPACE}.key ${CERTKEYSIZE:-2048}
 openssl req -new \
     -key ${NAMESPACE}.key \
     -subj "/C=NL/O=GBIC/OU=Random Department/serialNumber=1337/CN=${FUNCTION_NAME:-Zorg Medewerker}" \

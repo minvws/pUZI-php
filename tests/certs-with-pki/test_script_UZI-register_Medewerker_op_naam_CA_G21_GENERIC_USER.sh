@@ -3,7 +3,7 @@
 export I_NAMESPACE="UZI-register_Medewerker_op_naam_CA_G21_intermediate"
 export NAMESPACE="UZI-register_Medewerker_op_naam_CA_G21_GENERIC_USER_${CERTTYPE}"
 
-openssl genrsa -out ${NAMESPACE}.key 4096
+openssl genrsa -out ${NAMESPACE}.key ${CERTKEYSIZE:-2048}
 openssl req -new \
     -key ${NAMESPACE}.key \
     -subj "/C=NL/O=GBIC/serialNumber=1337/SN=${SURNAME:-Zorg}/GN=${GIVENNAME:-Jan}/CN=${GIVENNAME:-Jan} ${SURNAME:-Zorg}" \
