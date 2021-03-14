@@ -5,13 +5,15 @@ source supporting_functions.sh
 I_NAMESPACE="private_services_ca_intermediate"
 NAMESPACE="UZI-register_Medewerker_op_naam_CA_G21_intermediate"
 
-openssl genrsa -out ${NAMESPACE}.key 4096
-openssl req -new \
-    -key ${NAMESPACE}.key \
-    -subj "/C=NL/O=CIBG/organizationIdentifier=NTRNL-50000535/CN=UZI-register Medewerker op naam CA G21" \
-    -nodes \
-    -set_serial 0x$(openssl rand -hex 16) \
-    -out ${NAMESPACE}.csr || exit 1
+CERT_KEY_BITS="4096"
+echo "Generate Private key with ${CERT_KEY_BITS}"
+generate_private_key_file
+
+
+SUBJECT="/C=NL/O=CIBG/organizationIdentifier=NTRNL-50000535/CN=UZI-register Medewerker op naam CA G21"
+echo "CSR Generating..."
+generate_csr_file
+
 
 echo -n "CSR Generated: "
 openssl req -noout -subject -in "${NAMESPACE}.csr"

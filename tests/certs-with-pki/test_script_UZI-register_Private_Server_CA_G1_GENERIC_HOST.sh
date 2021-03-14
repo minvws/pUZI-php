@@ -7,13 +7,16 @@ export NAMESPACE="UZI-register_Private_Server_CA_G1_GENERIC_HOST_${CERTTYPE}"
 
 export SUBJECT_ALT_NAME=${SUBJECT_ALT_NAME:-host.example.org}
 
-openssl genrsa -out ${NAMESPACE}.key ${CERTKEYSIZE:-2048}
-openssl req -new \
-    -key ${NAMESPACE}.key \
-    -subj "/C=NL/O=GBIC/ST=Zuid Holland/L=Voorburg/CN=${SUBJECT_ALT_NAME}" \
-    -nodes \
-    -set_serial 0x$(openssl rand -hex 16) \
-    -out ${NAMESPACE}.csr  || exit 1
+
+CERT_KEY_BITS="2048"
+echo "Generate Private key with ${CERT_KEY_BITS}"
+generate_private_key_file
+
+
+SUBJECT="/C=NL/O=GBIC/ST=Zuid Holland/L=Voorburg/CN=${SUBJECT_ALT_NAME}"
+echo "CSR Generating..."
+generate_csr_file
+
 
 echo -n "CSR Generated: "
 openssl req -noout -subject -in "${NAMESPACE}.csr"

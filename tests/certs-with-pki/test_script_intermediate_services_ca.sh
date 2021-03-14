@@ -5,13 +5,16 @@ source supporting_functions.sh
 export I_NAMESPACE="Fake_Staat_der_Nederlanden_CA"
 export NAMESPACE="private_services_ca_intermediate"
 
-openssl genrsa -out ${NAMESPACE}.key 4096
-openssl req -new \
-    -key ${NAMESPACE}.key \
-    -subj "/C=NL/O=Fake Staat der Nederlanden/CN=Fake Staat der Nederlanden Private Services CA - G42" \
-    -nodes \
-    -set_serial 0x$(openssl rand -hex 16) \
-    -out ${NAMESPACE}.csr || exit 1
+
+CERT_KEY_BITS="4096"
+echo "Generate Private key with ${CERT_KEY_BITS}"
+generate_private_key_file
+
+
+SUBJECT="/C=NL/O=Fake Staat der Nederlanden/CN=Fake Staat der Nederlanden Private Services CA - G42"
+echo "CSR Generating..."
+generate_csr_file
+
 
 echo -n "CSR Generated: "
 openssl req -noout -subject -in "${NAMESPACE}.csr"
