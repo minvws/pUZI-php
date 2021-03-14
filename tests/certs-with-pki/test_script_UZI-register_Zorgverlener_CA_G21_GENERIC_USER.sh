@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source supporting_functions.sh
+
 export CERTTYPE=${CERTTYPE:-vertrouwelijkheidcertificaat}
 
 export TITLE="${TITLE:-physician}"
@@ -19,7 +21,8 @@ openssl req -new \
     -set_serial 0x$(openssl rand -hex 16) \
     -out "${NAMESPACE}.csr" || exit 1
 
-openssl req -noout -text -in "${NAMESPACE}.csr"
+echo -n "CSR Generated: "
+openssl req -noout -subject -in "${NAMESPACE}.csr"
 
 
 # Run support script to create OpenSSL config
@@ -37,5 +40,4 @@ openssl x509 -req \
     -extfile "${NAMESPACE}.config" \
     -out "${NAMESPACE}.pem" || exit 1
 
-
-openssl x509 -noout -text -in "${NAMESPACE}.pem"
+display_certificate "${NAMESPACE}.pem"

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source supporting_functions.sh
+
 
 # Set a default to: authenticiteitcertificaat
 CERTTYPE=${CERTTYPE:-vertrouwelijkheidcertificaat}
