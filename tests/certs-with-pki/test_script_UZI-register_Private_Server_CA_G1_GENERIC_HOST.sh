@@ -5,7 +5,7 @@ export NAMESPACE="UZI-register_Private_Server_CA_G1_GENERIC_HOST_${CERTTYPE}"
 
 export SUBJECT_ALT_NAME=${SUBJECT_ALT_NAME:-host.example.org}
 
-openssl genrsa -out ${NAMESPACE}.key 4096
+openssl genrsa -out ${NAMESPACE}.key ${CERTKEYSIZE:-2048}
 openssl req -new \
     -key ${NAMESPACE}.key \
     -subj "/C=NL/O=GBIC/ST=Zuid Holland/L=Voorburg/CN=${SUBJECT_ALT_NAME}" \

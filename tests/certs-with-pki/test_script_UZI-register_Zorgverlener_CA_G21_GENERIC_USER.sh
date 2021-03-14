@@ -11,7 +11,7 @@ export I_NAMESPACE="UZI-register_Zorgverlener_CA_G21_intermediate"
 export NAMESPACE="UZI-register_Zorgverlener_CA_G21_GENERIC_USER_${PASSTYPE}_${CERTTYPE}_${SERIALNUMBER}_${TITLE}_${SPECIALISM:-none}_${GIVENNAME}_${SURNAME}"
 
 
-openssl genrsa -out "${NAMESPACE}.key" 4096
+openssl genrsa -out "${NAMESPACE}.key" ${CERTKEYSIZE:-2048}
 openssl req -new \
     -key "${NAMESPACE}.key" \
     -subj "/C=NL/O=GBIC/serialNumber=${SERIALNUMBER}/title=${TITLE}/SN=${SURNAME}/GN=${GIVENNAME}/CN=${GIVENNAME} ${SURNAME}" \
