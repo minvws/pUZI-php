@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source supporting_functions.sh
+
 export I_NAMESPACE="Fake_Staat_der_Nederlanden_CA"
 export NAMESPACE="Fake_Staat_der_Nederlanden_CA"
 
@@ -9,19 +11,31 @@ openssl req -new \
     -subj "/C=NL/O=Fake Staat der Nederlanden/CN=Fake Staat der Nederlanden Private Root CA - G42" \
     -nodes \
     -set_serial 0x$(openssl rand -hex 16) \
-    -addext basicConstraints=critical,CA:TRUE \
-    -addext keyUsage=critical,keyCertSign,cRLSign \
-    -addext certificatePolicies=1.3.3.7 \
-    -addext subjectKeyIdentifier=hash \
     -out ${NAMESPACE}.csr || exit 1
 
-openssl req -noout -text -in ${NAMESPACE}.csr
+echo -n "CSR Generated: "
+openssl req -noout -subject -in "${NAMESPACE}.csr"
+
+
+cat > ${NAMESPACE}.config <<End-of-message
+[v3_root]
+basicConstraints = CA:TRUE
+keyUsage = critical,keyCertSign,cRLSign
+certificatePolicies=1.3.3.7
+
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+End-of-message
+
 
 openssl x509 \
-    -signkey ${NAMESPACE}.key \
+    -signkey "${NAMESPACE}.key" \
     -days 900 \
     -req \
     -in  ${NAMESPACE}.csr \
-    -out ${NAMESPACE}.pem
+    -extensions v3_root \
+    -extfile "${NAMESPACE}.config" \
+    -out "${NAMESPACE}.pem"
 
-openssl x509 -noout -text -in ${NAMESPACE}.pem
+
+display_certificate "${NAMESPACE}.pem"

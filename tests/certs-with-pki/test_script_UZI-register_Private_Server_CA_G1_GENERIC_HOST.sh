@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source supporting_functions.sh
+
 export I_NAMESPACE="UZI-register_Private_Server_CA_G1_intermediate"
 export NAMESPACE="UZI-register_Private_Server_CA_G1_GENERIC_HOST_${CERTTYPE}"
 
@@ -13,7 +15,9 @@ openssl req -new \
     -set_serial 0x$(openssl rand -hex 16) \
     -out ${NAMESPACE}.csr  || exit 1
 
-openssl req -noout -text -in ${NAMESPACE}.csr
+echo -n "CSR Generated: "
+openssl req -noout -subject -in "${NAMESPACE}.csr"
+
 
 export CERTTYPE=${CERTTYPE:-servercertificaat}
 
@@ -33,5 +37,4 @@ openssl x509 -req \
     -out ${NAMESPACE}.pem || exit 1
 
 
-openssl x509 -noout -text -in ${NAMESPACE}.pem
-
+display_certificate "${NAMESPACE}.pem"

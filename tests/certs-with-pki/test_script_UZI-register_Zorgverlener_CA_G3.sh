@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source supporting_functions.sh
+
 I_NAMESPACE="private_services_ca_intermediate"
 NAMESPACE="UZI-register_Zorgverlener_CA_G3_intermediate"
 
@@ -11,7 +13,8 @@ openssl req -new \
     -set_serial 0x$(openssl rand -hex 16) \
     -out ${NAMESPACE}.csr || exit 1
 
-openssl req -noout -text -in ${NAMESPACE}.csr
+echo -n "CSR Generated: "
+openssl req -noout -subject -in "${NAMESPACE}.csr"
 
 
 cat > ${NAMESPACE}.config <<End-of-message
@@ -40,5 +43,4 @@ openssl x509 -req \
     -extfile ${NAMESPACE}.config \
     -out ${NAMESPACE}.pem || exit 1
 
-
-openssl x509 -noout -text -in ${NAMESPACE}.pem
+display_certificate "${NAMESPACE}.pem"
