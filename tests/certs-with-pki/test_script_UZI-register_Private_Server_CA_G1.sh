@@ -8,7 +8,7 @@ export NAMESPACE="UZI-register_Private_Server_CA_G1_intermediate"
 openssl genrsa -out ${NAMESPACE}.key 4096
 openssl req -new \
     -key ${NAMESPACE}.key \
-    -subj "/C=NL/O=GBIC/OID=NTRNL-50000535/CN=UZI-register Private Server CA G1" \
+    -subj "/C=NL/O=GBIC/organizationIdentifier=NTRNL-50000535/CN=UZI-register Private Server CA G1" \
     -nodes \
     -set_serial 0x$(openssl rand -hex 16) \
     -out ${NAMESPACE}.csr || exit 1

@@ -8,7 +8,7 @@ NAMESPACE="UZI-register_Zorgverlener_CA_G3_intermediate"
 openssl genrsa -out ${NAMESPACE}.key 4096
 openssl req -new \
     -key ${NAMESPACE}.key \
-    -subj "/C=NL/O=CIBG/OID=NTRNL-50000535/CN=UZI-register Zorgverlener CA G3" \
+    -subj "/C=NL/O=CIBG/organizationIdentifier=NTRNL-50000535/CN=UZI-register Zorgverlener CA G3" \
     -nodes \
     -set_serial 0x$(openssl rand -hex 16) \
     -out ${NAMESPACE}.csr || exit 1
