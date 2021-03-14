@@ -26,7 +26,8 @@ openssl req -noout -subject -in "${NAMESPACE}.csr"
 
 
 # Run support script to create OpenSSL config
-./test_script_support_create_config.sh
+#./test_script_support_create_config.sh
+create_openssl_config_UZI_EEC
 
 
 # Assuming all variables are available
