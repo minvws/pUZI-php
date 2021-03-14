@@ -2,8 +2,8 @@
 
 ### Avoid adding the hash-bang, as this file will be sourced
 
-# Using a cut-down version of displaying a certificate, with sufficient info
-# still in it.
+### Using a cut-down version of displaying a certificate, with sufficient info
+### still in it.
 display_certificate() {
 
 CERT_FILE="$1"
@@ -13,8 +13,25 @@ openssl x509 -noout -text \
     -certopt no_header,ext_dump,no_pubkey,no_sigdump \
     -in "${CERT_FILE}"
 echo "----"
-
 }
+
+
+### Generate Private Key file
+generate_private_key_file() {
+openssl genrsa -out "${NAMESPACE}.key" ${CERT_KEY_BITS:-4096}
+}
+
+
+### Generate CSR file
+generate_csr_file() {
+openssl req -new \
+    -key "${NAMESPACE}.key" \
+    -subj "${SUBJECT}" \
+    -nodes \
+    -set_serial 0x$(openssl rand -hex 16) \
+    -out "${NAMESPACE}.csr" || exit 1
+}
+
 
 ### Sign a certificate
 ### Assuming all variables are available.
