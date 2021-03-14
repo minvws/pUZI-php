@@ -25,16 +25,10 @@ export CERTTYPE=${CERTTYPE:-servercertificaat}
 ./test_script_support_create_config.sh
 
 
-openssl x509 -req \
-    -in ${NAMESPACE}.csr \
-    -CA ${I_NAMESPACE}.pem \
-    -CAkey ${I_NAMESPACE}.key \
-    -CAcreateserial \
-    -days 888 \
-    -set_serial 0x$(openssl rand -hex 16) \
-    -extensions uzi_main \
-    -extfile ${NAMESPACE}.config \
-    -out ${NAMESPACE}.pem || exit 1
+# Assuming all variables are available
+EXTENSION_MAIN="uzi_main"
+CERT_DAYS=888
+sign_certificate
 
 
 display_certificate "${NAMESPACE}.pem"
