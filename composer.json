@@ -61,5 +61,13 @@
   "suggest": {
     "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations.",
     "ext-gmp": "Install the GMP (GNU Multiple Precision) extension in order to speed up arbitrary precision integer arithmetic operations."
+  },
+  "scripts": {
+    "test": [
+        "vendor/bin/phpunit",
+        "vendor/bin/phpstan analyse",
+        "vendor/bin/psalm",
+        "vendor/bin/phpcs"
+    ]
   }
 }

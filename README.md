@@ -55,9 +55,18 @@ Add the following to your `composer.json` and then run `composer install`.
 ## Usage
 
 ```php
-$uzi = new \MinVWS\PUZI\UziReader;
-$data = $uzi->getData();
-var_dump($data);
+
+// Request from your framework/controller
+$uzi = new \MinVWS\PUZI\UziReader();
+$user = $uzi->getDataFromRequest($request);
+print $user->getUziNumber();
+
+// In case of no request (deprecated):
+$uzi = new \MinVWS\PUZI\UziReader();
+$user = $uzi->getData();
+
+print $user->getUziNumber();
+var_dump($user->toArray());
 ```
 
 ```text
@@ -82,6 +91,27 @@ array(9) {
   string(8) "00000000"
 }
 ```
+
+This package also allows validation of the returned user:
+
+```php
+$allowedTypes = [
+    UziConstants::UZI_TYPE_CARE_PROVIDER,
+    UziConstants::UZI_TYPE_NAMED_EMPLOYEE,
+];
+$allowedRoles = [
+    UziConstants::UZI_ROLE_DOCTOR,    
+    UziConstants::UZI_ROLE_PHARMACIST,    
+];
+
+$validator = new UziValidator(true, $allowedTypes, $allowedRoles);
+if ($validator->isValid($user)) {
+    print "Validated as doctor or pharmasist";
+}
+```
+
+You can use either `isValid()`, which returns a boolean, or `validate()` which throws an exception when 
+not correctly validated.
 
 ## Uses
 
@@ -116,12 +146,13 @@ array(9) {
     ```sh
     vendor/bin/phpunit
     ```
+   
 6. (Recommended) Check whether your code conforms to our Coding Standards by running
 
     ```sh
     vendor/bin/phpstan analyse
     vendor/bin/psalm
-    vVendor/bin/phpcs
+    vendor/bin/phpcs
     ```
 
 7. Send us a Pull Request

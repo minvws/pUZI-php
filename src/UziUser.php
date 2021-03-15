@@ -10,23 +10,23 @@ namespace MinVWS\PUZI;
 class UziUser implements \JsonSerializable
 {
     /** @var string */
-    protected $agb_code;
+    protected $agb_code = "";
     /** @var string */
-    protected $card_type;
+    protected $card_type = "";
     /** @var string */
-    protected $given_name;
+    protected $given_name = "";
     /** @var string */
-    protected $oid_ca;
+    protected $oid_ca = "";
     /** @var string */
-    protected $role;
+    protected $role = "";
     /** @var string */
-    protected $subscriber_number;
+    protected $subscriber_number = "";
     /** @var string */
-    protected $sur_name;
+    protected $sur_name = "";
     /** @var string */
-    protected $uzi_number;
+    protected $uzi_number = "";
     /** @var string */
-    protected $uzi_version;
+    protected $uzi_version = "";
 
     /**
      * @return string
@@ -176,6 +176,14 @@ class UziUser implements \JsonSerializable
      * @return mixed|string[]
      */
     public function jsonSerialize()
+    {
+        return $this->toarray();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function toArray(): array
     {
         return [
             'agb_code' => $this->getAgbCode(),
