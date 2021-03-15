@@ -12,8 +12,6 @@ pUZI is a simple and functional module which allows you to use the UZI cards as 
 1. a reader that interprets the PKCS11 data the card middleware provides to the webserver and returns an UziUser object in return (this repository).
 2. middleware (currently only for the Laravel framework) that allows authentication and user creation based on UZI cards.
 
-This software requires the client to use the [SafeSign](https://www.uziregister.nl/uzi-pas/installatie-van-kaartlezer-en-software) middleware and works best using the [Firefox](https://www.mozilla.org/firefox/browsers/) browser.
-
 pUZI is available under the EU PL licence. It was created early 2021 during the COVID19 campaign as part of the vaccination registration project BRBA for the ‘Ministerie van Volksgezondheid, Welzijn & Sport, programma Realisatie Digitale Ondersteuning.’
 
 Questions and contributions are welcome via [GitHub](https://github.com/minvws/pUZI-php/issues).
