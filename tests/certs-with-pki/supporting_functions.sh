@@ -241,31 +241,26 @@ OTHERNAME_SUBJECT_ID+=".${OTHERNAME_SUBJECT_ID_ROL_SPECIALISME}"
 OTHERNAME_SUBJECT_ID+="-${OTHERNAME_SUBJECT_ID_AGB}"
 
 
-cat > "${NAMESPACE}.config" <<End-of-message
-[polselect]
-policyIdentifier = ${OTHERNAME_SUBJECT_ID_OID_CA}
-CPS.1=https://example.org
-
-[uzi_main]
-basicConstraints = critical,CA:FALSE
-certificatePolicies=1.3.3.7, @polselect
-
-subjectKeyIdentifier=hash
-authorityKeyIdentifier=keyid,issuer
-
-End-of-message
-
 # In authenticiteitcertificaten is uitsluitend het digitalSignature bit
 # opgenomen.
 if [ "${CERTTYPE}" = "authenticiteitcertificaat" ]; then
 
-cat >> "${NAMESPACE}.config" <<End-of-message
+cat > "${NAMESPACE}.config" <<End-of-message
+[uzi_main]
+basicConstraints = critical,CA:FALSE
+certificatePolicies=1.3.3.7, ${OTHERNAME_SUBJECT_ID_OID_CA}, @polselect
+
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+
 keyUsage = critical,digitalSignature
 
 # TODO: In doubt if adding msSmartcardLogin is OK. It's not listed as needed in
 # the CPS, but should be there as part of the Microsoft spec.
 # backup line: extendedKeyUsage = clientAuth, emailProtection, codeSigning
-extendedKeyUsage = clientAuth, emailProtection, codeSigning, msSmartcardLogin
+
+# 1.3.6.1.4.1.311.10.3.12: szOID_KP_DOCUMENT_SIGNING - Microsoft document signing
+extendedKeyUsage = clientAuth, emailProtection, 1.3.6.1.4.1.311.10.3.12
 subjectAltName = @alt_names
 
 [alt_names]
@@ -275,6 +270,13 @@ otherName.1 = msUPN;UTF8:${UZINUMBER}@${ABONNEENUMMER}
 # subjectAltName = otherName:2.5.5.5;IA5STRING:2.16.528.1.1003.1.3.5.5.2-1-11111111-N-90000111-01.015-00000000
 otherName.2 = 2.5.5.5;IA5STRING:${OTHERNAME_SUBJECT_ID_OID_CA}-${OTHERNAME_SUBJECT_ID}
 
+[polselect]
+policyIdentifier = 2.16.528.1.1007.99.212
+CPS.1=https://acceptatie.zorgcsp.nl/cps/uzi-register.html
+userNotice.1 = @notice
+
+[notice]
+explicitText = "Certificaat uitsluitend gebruiken ten behoeve van de TEST van het UZI-register. Het UZI-register is in geen geval aansprakelijk voor eventuele schade."
 End-of-message
 
 
@@ -282,14 +284,28 @@ End-of-message
 # dataEncipherment bits opgenomen.
 elif [ "${CERTTYPE}" = "vertrouwelijkheidcertificaat" ]; then
 
-cat >> "${NAMESPACE}.config" <<End-of-message
+cat > "${NAMESPACE}.config" <<End-of-message
+[uzi_main]
+basicConstraints = critical,CA:FALSE
+certificatePolicies=1.3.3.7, ${OTHERNAME_SUBJECT_ID_OID_CA}, @polselect
+
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+
 keyUsage = critical,keyEncipherment,dataEncipherment
 extendedKeyUsage = emailProtection, msEFS
 subjectAltName = @alt_names
 
 [alt_names]
-# subjectAltName = otherName:2.5.5.5;IA5STRING:2.16.528.1.1003.1.3.5.5.2-1-11111111-N-90000111-01.015-00000000
 otherName = 2.5.5.5;IA5STRING:${OTHERNAME_SUBJECT_ID_OID_CA}-${OTHERNAME_SUBJECT_ID}
+
+[polselect]
+policyIdentifier = 2.16.528.1.1007.99.212
+CPS.1=https://acceptatie.zorgcsp.nl/cps/uzi-register.html
+userNotice.1 = @notice
+
+[notice]
+explicitText = "Certificaat uitsluitend gebruiken ten behoeve van de TEST van het UZI-register. Het UZI-register is in geen geval aansprakelijk voor eventuele schade."
 End-of-message
 
 
@@ -297,21 +313,42 @@ End-of-message
 # wijze zijn opgenomen.
 elif [ "${CERTTYPE}" = "handtekeningcertificaat" ]; then
 
-cat >> "${NAMESPACE}.config" <<End-of-message
+cat > "${NAMESPACE}.config" <<End-of-message
+[uzi_main]
+basicConstraints = critical,CA:FALSE
+certificatePolicies=1.3.3.7, ${OTHERNAME_SUBJECT_ID_OID_CA}, @polselect
+
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+
 keyUsage = critical,nonRepudiation
-extendedKeyUsage = emailProtection, codeSigning
+extendedKeyUsage = emailProtection, 1.3.6.1.4.1.311.10.3.12
 subjectAltName = @alt_names
 
 [alt_names]
-# subjectAltName = otherName:2.5.5.5;IA5STRING:2.16.528.1.1003.1.3.5.5.2-1-11111111-N-90000111-01.015-00000000
 otherName = 2.5.5.5;IA5STRING:${OTHERNAME_SUBJECT_ID_OID_CA}-${OTHERNAME_SUBJECT_ID}
+
+[polselect]
+policyIdentifier = 2.16.528.1.1007.99.212
+CPS.2=https://acceptatie.zorgcsp.nl/cps/uzi-register.html
+userNotice.1 = @notice
+
+[notice]
+explicitText = "Certificaat uitsluitend gebruiken ten behoeve van de TEST van het UZI-register. Het UZI-register is in geen geval aansprakelijk voor eventuele schade."
 End-of-message
 
 # In de servercertificaten (services) zijn uitsluitend de DigitalSignatureen
 # KeyEncipherment bits opgenomen.
 elif [ "${CERTTYPE}" = "servercertificaat" ]; then
 
-cat >> "${NAMESPACE}.config" <<End-of-message
+cat > "${NAMESPACE}.config" <<End-of-message
+[uzi_main]
+basicConstraints = critical,CA:FALSE
+certificatePolicies=1.3.3.7, @polselect
+
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+
 keyUsage = critical,digitalSignature,keyEncipherment
 extendedKeyUsage = clientAuth, serverAuth
 subjectAltName = @alt_names
@@ -320,6 +357,14 @@ subjectAltName = @alt_names
 DNS = ${SUBJECT_ALT_NAME}
 # subjectAltName = otherName:2.5.5.5;IA5STRING:2.16.528.1.1003.1.3.5.5.2-1-11111111-N-90000111-01.015-00000000
 # otherName = 2.5.5.5;IA5STRING:${OTHERNAME_SUBJECT_ID_OID_CA}-${OTHERNAME_SUBJECT_ID}
+
+[polselect]
+policyIdentifier = ${OTHERNAME_SUBJECT_ID_OID_CA}
+CPS.1=https://acceptatie.zorgcsp.nl/cps/uzi-register.html
+userNotice.1 = @notice
+
+[notice]
+explicitText = "Certificaat uitsluitend gebruiken ten behoeve van de TEST van het UZI-register. Het UZI-register is in geen geval aansprakelijk voor eventuele schade."
 End-of-message
 
 fi

@@ -11,7 +11,12 @@ echo "Generate Private key with ${CERT_KEY_BITS}"
 generate_private_key_file
 
 
-SUBJECT="/C=NL/O=${ORG:-CIBG}/serialNumber=${SERIAL:-1337}/SN=${SURNAME:-Zorg}/GN=${GIVENNAME:-Jan}/CN=${GIVENNAME:-Jan} ${SURNAME:-Zorg}"
+GIVENNAME="Mieke"
+SURNAME="Medewerker"
+SERIAL="1337"
+ORG="CIBG"
+
+SUBJECT="/C=NL/O=${ORG}/serialNumber=${SERIAL}/SN=${SURNAME}/GN=${GIVENNAME}/CN=${GIVENNAME} ${SURNAME}"
 echo "CSR Generating..."
 generate_csr_file
 
