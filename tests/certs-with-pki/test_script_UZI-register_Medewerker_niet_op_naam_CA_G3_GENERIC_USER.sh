@@ -35,3 +35,4 @@ sign_certificate
 
 
 display_certificate "${NAMESPACE}.pem"
+
