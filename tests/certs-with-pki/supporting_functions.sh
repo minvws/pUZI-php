@@ -2,6 +2,29 @@
 
 ### Avoid adding the hash-bang, as this file will be sourced
 
+
+GLOBAL_BUNDLE_FILENAME_FAKE_ROOT="bundle_fake_root.pem"
+GLOBAL_BUNDLE_FILENAME_FAKE_PRIVATE_ROOT="bundle_fake_private_root.pem"
+
+
+### Clean bundle file
+remove_bundle_file() {
+    BUNDLE_FILE="$1"
+
+    rm -vf "${BUNDLE_FILE}"
+}
+
+### Add to bundle file
+add_to_bundle_file() {
+
+    BUNDLE_FILE="$1"
+    X509_CERT="$2"
+
+    openssl x509 \
+        -in "${X509_CERT}" -subject -issuer >> "${BUNDLE_FILE}"
+}
+
+
 ### Using a cut-down version of displaying a certificate, with sufficient info
 ### still in it.
 display_certificate() {

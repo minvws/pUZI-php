@@ -28,3 +28,7 @@ echo "Sign root CA - ${NAMESPACE}"
 sign_root_certificate
 
 display_certificate "${NAMESPACE}.pem"
+
+
+# Adding to bundle file
+add_to_bundle_file "${GLOBAL_BUNDLE_FILENAME_FAKE_PRIVATE_ROOT}" "${NAMESPACE}.pem"
