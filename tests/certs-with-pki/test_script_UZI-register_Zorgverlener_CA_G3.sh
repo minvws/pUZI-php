@@ -2,8 +2,8 @@
 
 source supporting_functions.sh
 
-I_NAMESPACE="private_services_ca_intermediate"
-NAMESPACE="UZI-register_Zorgverlener_CA_G3_intermediate"
+I_NAMESPACE="Fake_Staat_der_Nederlanden_Organisatie_Persoon_CA"
+NAMESPACE="UZI-register_Zorgverlener_CA_G3"
 
 
 CERT_KEY_BITS="4096"
@@ -20,23 +20,11 @@ echo -n "CSR Generated: "
 openssl req -noout -subject -in "${NAMESPACE}.csr"
 
 
-cat > ${NAMESPACE}.config <<End-of-message
-[uzi_main]
-basicConstraints = CA:TRUE,pathlen:0
-keyUsage = critical,keyCertSign,cRLSign
-certificatePolicies=1.3.3.7, 2.16.528.1.1003.1.2.8.4, 2.16.528.1.1003.1.2.8.5, @polselect
-
-subjectKeyIdentifier=hash
-authorityKeyIdentifier=keyid,issuer
-
-[polselect]
-policyIdentifier = 2.16.528.1.1003.1.2.8.6
-CPS.1=https://example.org
-End-of-message
+echo "Generate config file: ${NAMESPACE}.config"
+create_openssl_config_L3_zorgmedewerker_CA
 
 
 # Assuming all variables are available
-EXTENSION_MAIN="uzi_main"
 CERT_DAYS=898
 sign_certificate
 

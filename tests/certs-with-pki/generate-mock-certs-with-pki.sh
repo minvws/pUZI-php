@@ -1,25 +1,31 @@
 #!/bin/bash
 
 
-# ROOT CA
-./test_script_root_ca.sh || exit 1
+# Level 1: Fake Private Root CA - Used for servers
+./test_script_root_fake_staat_der_nederlanden_private_root_ca_g42.sh || exit 1
 
-# First level Intermediate CA
-./test_script_intermediate_services_ca.sh || exit 1
+# Level 1: Fake Root CA - Used for people
+./test_script_root_fake_staat_der_nederlanden_root_ca_g42.sh || exit 1
 
-# Second level Intermediate CA - UZI SERVERS
+# Level 2: Fake Intermediate CA - Used for servers
+./test_script_fake_staat_der_nederlanden_private_services_ca_g42.sh || exit 1
+
+# Level 2: Fake Intermediate CA - Used for people, but NOT by name
+./test_script_fake_staat_der_nederlanden_organisatie_services_ca_g42.sh || exit 1
+
+# Level 2: Fake Intermediate CA - Used for people, by name
+./test_script_fake_staat_der_nederlanden_organisatie_persoon_ca_g42.sh || exit 1
+
+# Level 3: UZI-register Private Server CA - Used for servers
 ./test_script_UZI-register_Private_Server_CA_G1.sh || exit 1
 
-# Second level Intermediate CA - UZI Zorgverlener_CA
-./test_script_UZI-register_Zorgverlener_CA_G21.sh || exit 1
-./test_script_UZI-register_Zorgverlener_CA_G3.sh || exit 1
-
-# Second level Intermediate CA - UZI Medewerker_niet_op_naam_CA
-./test_script_UZI-register_Medewerker_niet_op_naam_CA_G21.sh || exit 1
+# Level 3: UZI-register Medewerker niet op naam CA - User for people, but NOT by name
 ./test_script_UZI-register_Medewerker_niet_op_naam_CA_G3.sh || exit 1
 
+# Level 3: UZI-register Zorgverlener CA - User for people, by name
+./test_script_UZI-register_Zorgverlener_CA_G3.sh || exit 1
+
 # Second level Intermediate CA - UZI Medewerker_op_naam_CA
-./test_script_UZI-register_Medewerker_op_naam_CA_G21.sh || exit 1
 ./test_script_UZI-register_Medewerker_op_naam_CA_G3.sh || exit 1
 
 
@@ -43,7 +49,6 @@ for CERTTYPE in ${CERTTYPES[*]}; do
     export CERTTYPE
     export PASSTYPE="M"
 
-    ./test_script_UZI-register_Medewerker_niet_op_naam_CA_G21_GENERIC_USER.sh || exit 1
     ./test_script_UZI-register_Medewerker_niet_op_naam_CA_G3_GENERIC_USER.sh || exit 1
 done
 
@@ -55,7 +60,6 @@ for CERTTYPE in ${CERTTYPES[*]}; do
     export CERT_I_CA="MEDEWERKER_OP_NAAM"
     export PASSTYPE="N"
 
-    ./test_script_UZI-register_Medewerker_op_naam_CA_G21_GENERIC_USER.sh || exit 1
     ./test_script_UZI-register_Medewerker_op_naam_CA_G3_GENERIC_USER.sh || exit 1
 done
 
@@ -194,7 +198,6 @@ for CERTTYPE in ${CERTTYPES[*]}; do
         unset SPECIALISM
 
         echo "##### TITLE: ${TITLE} (${TITLE_CODE}), Specialism: None"
-        ./test_script_UZI-register_Zorgverlener_CA_G21_GENERIC_USER.sh || exit 1
         ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
 
 
@@ -209,7 +212,6 @@ for CERTTYPE in ${CERTTYPES[*]}; do
                 export SPECIALISM="$VALUE"
 
                 echo "##### TITLE: ${TITLE} (${TITLE_CODE}), Specialism: ${SPECIALISM} (${SPECI_CODE})"
-                ./test_script_UZI-register_Zorgverlener_CA_G21_GENERIC_USER.sh || exit 1
                 ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
             done
 
@@ -224,7 +226,6 @@ for CERTTYPE in ${CERTTYPES[*]}; do
                 export SPECIALISM="$VALUE"
 
                 echo "##### TITLE: ${TITLE} (${TITLE_CODE}), Specialism: ${SPECIALISM} (${SPECI_CODE})"
-                ./test_script_UZI-register_Zorgverlener_CA_G21_GENERIC_USER.sh || exit 1
                 ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
             done
 
@@ -239,7 +240,6 @@ for CERTTYPE in ${CERTTYPES[*]}; do
                 export SPECIALISM="$VALUE"
 
                 echo "##### TITLE: ${TITLE} (${TITLE_CODE}), Specialism: ${SPECIALISM} (${SPECI_CODE})"
-                ./test_script_UZI-register_Zorgverlener_CA_G21_GENERIC_USER.sh || exit 1
                 ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
             done
 
@@ -254,7 +254,6 @@ for CERTTYPE in ${CERTTYPES[*]}; do
                 export SPECIALISM="$VALUE"
 
                 echo "##### TITLE: ${TITLE} (${TITLE_CODE}), Specialism: ${SPECIALISM} (${SPECI_CODE})"
-                ./test_script_UZI-register_Zorgverlener_CA_G21_GENERIC_USER.sh || exit 1
                 ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
             done
 
@@ -269,7 +268,6 @@ for CERTTYPE in ${CERTTYPES[*]}; do
                 export SPECIALISM="$VALUE"
 
                 echo "##### TITLE: ${TITLE} (${TITLE_CODE}), Specialism: ${SPECIALISM} (${SPECI_CODE})"
-                ./test_script_UZI-register_Zorgverlener_CA_G21_GENERIC_USER.sh || exit 1
                 ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh || exit 1
             done
         fi

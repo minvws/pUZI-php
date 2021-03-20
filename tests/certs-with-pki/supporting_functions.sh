@@ -44,11 +44,131 @@ openssl x509 -req \
     -CAcreateserial \
     -days ${CERT_DAYS:-888} \
     -set_serial 0x$(openssl rand -hex 16) \
-    -extensions "${EXTENSION_MAIN:-uzi_main}" \
+    -extensions "${EXT_NAME:-${NAMESPACE}}" \
     -extfile "${NAMESPACE}.config" \
     -out "${NAMESPACE}.pem" || exit 1
 
 }
+
+
+### Sign a Root certificate
+### Assuming all variables are available.
+sign_root_certificate() {
+
+openssl x509 \
+    -signkey "${NAMESPACE}.key" \
+    -days 900 \
+    -req \
+    -in "${NAMESPACE}.csr" \
+    -extensions "${NAMESPACE}" \
+    -extfile "${NAMESPACE}.config" \
+    -out "${NAMESPACE}.pem"
+
+}
+
+
+### Generate config file for root CA
+### Assuming all variables are available.
+create_openssl_config_Root_CA() {
+
+cat > "${NAMESPACE}.config" <<End-of-message
+[${NAMESPACE}]
+basicConstraints = CA:TRUE
+keyUsage = critical,keyCertSign,cRLSign
+certificatePolicies=1.3.3.7
+
+subjectKeyIdentifier = hash
+End-of-message
+
+}
+
+### Generate config file for L2 CA
+### Assuming all variables are available.
+create_openssl_config_L2_CA() {
+
+cat > "${NAMESPACE}.config" <<End-of-message
+[${NAMESPACE}]
+basicConstraints = CA:TRUE
+keyUsage = critical,keyCertSign,cRLSign
+certificatePolicies=1.3.3.7, 2.16.528.1.1007.99.211, 2.16.528.1.1007.99.212, @pol_${NAMESPACE}
+
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+
+[pol_${NAMESPACE}]
+policyIdentifier = 2.16.528.1.1007.99.213
+CPS.1=https://acceptatie.zorgcsp.nl/cps/uzi-register.html
+End-of-message
+
+}
+
+
+### Generate config file for L3 Medewerker niet op naam CA
+### Assuming all variables are available.
+create_openssl_config_L3_medewerker_niet_op_naam_CA() {
+
+cat > "${NAMESPACE}.config" <<End-of-message
+[${NAMESPACE}]
+basicConstraints = CA:TRUE,pathlen:0
+keyUsage = critical,keyCertSign,cRLSign
+extendedKeyUsage = clientAuth, emailProtection, 1.3.6.1.4.1.311.10.3.12, msEFS, OCSPSigning
+certificatePolicies=1.3.3.7, 2.16.528.1.1007.99.211, 2.16.528.1.1007.99.212, @pol_${NAMESPACE}
+
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+
+[pol_${NAMESPACE}]
+policyIdentifier = 2.16.528.1.1007.99.213
+CPS.1=https://acceptatie.zorgcsp.nl/cps/uzi-register.html
+End-of-message
+
+}
+
+
+### Generate config file for L3 Zorgmedewerker CA
+### Assuming all variables are available.
+create_openssl_config_L3_zorgmedewerker_CA() {
+
+cat > "${NAMESPACE}.config" <<End-of-message
+[${NAMESPACE}]
+basicConstraints = CA:TRUE,pathlen:0
+keyUsage = critical,keyCertSign,cRLSign
+extendedKeyUsage = clientAuth, emailProtection, 1.3.6.1.4.1.311.10.3.12, msEFS, OCSPSigning
+certificatePolicies=1.3.3.7, 2.16.528.1.1007.99.211, 2.16.528.1.1007.99.212, @pol_${NAMESPACE}
+
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+
+[pol_${NAMESPACE}]
+policyIdentifier = 2.16.528.1.1007.99.213
+CPS.1=https://acceptatie.zorgcsp.nl/cps/uzi-register.html
+End-of-message
+
+}
+
+
+### Generate config file for L3 Medewerker op naam CA
+### Assuming all variables are available.
+create_openssl_config_L3_medewerker_op_naam_CA() {
+
+cat > "${NAMESPACE}.config" <<End-of-message
+[${NAMESPACE}]
+basicConstraints = CA:TRUE,pathlen:0
+keyUsage = critical,keyCertSign,cRLSign
+extendedKeyUsage = clientAuth, emailProtection, 1.3.6.1.4.1.311.10.3.12, msEFS, OCSPSigning
+certificatePolicies=1.3.3.7, 2.16.528.1.1007.99.211, 2.16.528.1.1007.99.212, @pol_${NAMESPACE}
+
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+
+[pol_${NAMESPACE}]
+policyIdentifier = 2.16.528.1.1007.99.213
+CPS.1=https://acceptatie.zorgcsp.nl/cps/uzi-register.html
+End-of-message
+
+}
+
+
 
 
 ### Create OpenSSL configuration file. Especially the creation of the otherName
