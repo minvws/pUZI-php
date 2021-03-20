@@ -20,7 +20,7 @@ The output will be:
   * All CAs in the 'A root CA associate with servers'
 
 
-## Main generator script for the PKI.
+# Main generator script for the PKI.
 ```bash
 ./generate-mock-certs-with-pki.sh
 ```
@@ -30,49 +30,42 @@ The output will be:
 ./test_script_root_fake_staat_der_nederlanden_private_root_ca_g42.sh
 ```
 
+### Level 2: Fake Intermediate CA - Used for servers
+```bash
+./test_script_fake_staat_der_nederlanden_private_services_ca_g42.sh
+```
+
+#### Level 3: UZI-register Private Server CA - Used for servers
+```bash
+./test_script_UZI-register_Private_Server_CA_G1.sh
+```
+
+##### Level 4 - End Entity Certificate - Private Server
+```bash
+SUBJECT_ALT_NAME="host.example.org"  
+CERTTYPE="servercertificaat"  
+./test_script_UZI-register_Private_Server_CA_G1_GENERIC_HOST.sh  
+```
+
+
+
+
 ## Level 1: Fake Root CA - Used for people
 ```bash
 ./test_script_root_fake_staat_der_nederlanden_root_ca_g42.sh
 ```
 
-## Level 2: Fake Intermediate CA - Used for servers
-```bash
-./test_script_fake_staat_der_nederlanden_private_services_ca_g42.sh
-```
-
-## Level 2: Fake Intermediate CA - Used for people, but NOT by name
+### Level 2: Fake Intermediate CA - Used for people, but NOT by name
 ```bash
 ./test_script_fake_staat_der_nederlanden_organisatie_services_ca_g42.sh
 ```
 
-## Level 2: Fake Intermediate CA - Used for people, by name
-```bash
-./test_script_fake_staat_der_nederlanden_organisatie_persoon_ca_g42.sh
-```
-
-## Level 3: UZI-register Private Server CA - Used for servers
-```bash
-./test_script_UZI-register_Private_Server_CA_G1.sh
-```
-
-## Level 3: UZI-register Medewerker niet op naam CA - Used for employees, but NOT by name
+#### Level 3: UZI-register Medewerker niet op naam CA - Used for employees, but NOT by name
 ```bash
 ./test_script_UZI-register_Medewerker_niet_op_naam_CA_G3.sh
 ```
 
-## Level 3: UZI-register Zorgverlener CA - Used for people, by name
-```bash
-./test_script_UZI-register_Zorgverlener_CA_G3.sh
-```
-
-## Level 3: UZI Medewerker op naam CA - Used for employees, by name
-```bash
-./test_script_UZI-register_Medewerker_op_naam_CA_G3.sh
-```
-
-
-
-### Level 4 - End Entity Certificate - Medewerker niet op naam G3
+##### Level 4 - End Entity Certificate - Medewerker niet op naam G3
 Options CERTTYPE:
 - authenticiteitcertificaat
 - vertrouwelijkheidcertificaat
@@ -82,7 +75,19 @@ CERTTYPE="vertrouwelijkheidcertificaat"
 ./test_script_UZI-register_Medewerker_niet_op_naam_CA_G3_GENERIC_USER.sh  
 ```
 
-### Level 4 - End Entity Certificate - Medewerker op naam G3
+
+
+### Level 2: Fake Intermediate CA - Used for people, by name
+```bash
+./test_script_fake_staat_der_nederlanden_organisatie_persoon_ca_g42.sh
+```
+
+#### Level 3: UZI Medewerker op naam CA - Used for employees, by name
+```bash
+./test_script_UZI-register_Medewerker_op_naam_CA_G3.sh
+```
+
+##### Level 4 - End Entity Certificate - Medewerker op naam G3
 Options CERTTYPE:
 - authenticiteitcertificaat
 - vertrouwelijkheidcertificaat
@@ -94,7 +99,13 @@ CERTTYPE="vertrouwelijkheidcertificaat"
 ./test_script_UZI-register_Medewerker_op_naam_CA_G3_GENERIC_USER.sh  
 ```
 
-### Level 4 - End Entity Certificate - Zorgverlener G3
+
+#### Level 3: UZI-register Zorgverlener CA - Used for people, by name
+```bash
+./test_script_UZI-register_Zorgverlener_CA_G3.sh
+```
+
+##### Level 4 - End Entity Certificate - Zorgverlener G3
 Options CERTTYPE:
 - authenticiteitcertificaat
 - vertrouwelijkheidcertificaat
@@ -107,14 +118,7 @@ CERTTYPE="vertrouwelijkheidcertificaat"
 ./test_script_UZI-register_Zorgverlener_CA_G3_GENERIC_USER.sh  
 ```
 
-### Level 4 - End Entity Certificate - Private Server
-```bash
-SUBJECT_ALT_NAME="host.example.org"  
-CERTTYPE="servercertificaat"  
-./test_script_UZI-register_Private_Server_CA_G1_GENERIC_HOST.sh  
-```
-
-### Aanspreektitel (var: TITLE)
+##### Aanspreektitel (var: TITLE)
 - Apotheker (17)
 - Arts (01)
 - Fysiotherapeut (04)
@@ -127,8 +131,9 @@ CERTTYPE="servercertificaat"
 - Orthopedagoog –generalist (31)
 - ... and all other specialisms and other forms.
 
-### Certificate type (var: CERTTYPE)
+
+## Certificate type (var: CERTTYPE)
 - authenticiteitcertificaat
 - vertrouwelijkheidcertificaat
-- handtekeningcertificaat  
+- handtekeningcertificaat
 - servercertificaat 
