@@ -2,7 +2,8 @@
 
 namespace MinVWS\PUZI\Tests;
 
-use MinVWS\PUZI\Exceptions\UziException;
+use MinVWS\PUZI\Exceptions\UziCertificateException;
+use MinVWS\PUZI\Exceptions\UziCertificateNotUziException;
 use MinVWS\PUZI\UziReader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ final class UziReaderTest extends TestCase
     {
         $uzi = new UziReader();
 
-        $this->expectException(UziException::class);
+        $this->expectException(UziCertificateException::class);
         $this->expectExceptionMessage("Webserver client cert check not passed");
 
         $request = new Request();
@@ -29,7 +30,7 @@ final class UziReaderTest extends TestCase
     {
         $uzi = new UziReader();
 
-        $this->expectException(UziException::class);
+        $this->expectException(UziCertificateException::class);
         $this->expectExceptionMessage("Webserver client cert check not passed");
 
         $request = new Request();
@@ -42,7 +43,7 @@ final class UziReaderTest extends TestCase
     {
         $uzi = new UziReader();
 
-        $this->expectException(UziException::class);
+        $this->expectException(UziCertificateException::class);
         $this->expectExceptionMessage("No client certificate presented");
 
         $request = new Request();
@@ -55,7 +56,7 @@ final class UziReaderTest extends TestCase
     {
         $uzi = new UziReader();
 
-        $this->expectException(UziException::class);
+        $this->expectException(UziCertificateNotUziException::class);
         $this->expectExceptionMessage("No valid UZI data found");
 
         $request = new Request();
@@ -69,7 +70,7 @@ final class UziReaderTest extends TestCase
     {
         $uzi = new UziReader();
 
-        $this->expectException(UziException::class);
+        $this->expectException(UziCertificateNotUziException::class);
         $this->expectExceptionMessage("No valid UZI data found");
 
         $request = new Request();
@@ -83,7 +84,7 @@ final class UziReaderTest extends TestCase
     {
         $uzi = new UziReader();
 
-        $this->expectException(UziException::class);
+        $this->expectException(UziCertificateNotUziException::class);
         $this->expectExceptionMessage("No valid UZI data found");
 
         $request = new Request();
@@ -97,7 +98,7 @@ final class UziReaderTest extends TestCase
     {
         $uzi = new UziReader();
 
-        $this->expectException(UziException::class);
+        $this->expectException(UziCertificateException::class);
         $this->expectExceptionMessage("No ia5String");
 
         $request = new Request();
@@ -112,7 +113,7 @@ final class UziReaderTest extends TestCase
     {
         $uzi = new UziReader();
 
-        $this->expectException(UziException::class);
+        $this->expectException(UziCertificateException::class);
         $this->expectExceptionMessage("Incorrect SAN found");
 
         $request = new Request();
@@ -127,7 +128,7 @@ final class UziReaderTest extends TestCase
     {
         $uzi = new UziReader();
 
-        $this->expectException(UziException::class);
+        $this->expectException(UziCertificateException::class);
         $this->expectExceptionMessage("Incorrect SAN found");
 
         $request = new Request();

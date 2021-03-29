@@ -2,6 +2,8 @@
 
 namespace MinVWS\PUZI;
 
+use MinVWS\PUZI\Exceptions\UziCertificateException;
+use MinVWS\PUZI\Exceptions\UziCertificateNotUziException;
 use phpseclib3\File\X509;
 use MinVWS\PUZI\Exceptions\UziException;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,16 +37,16 @@ class UziReader
     public function getDataFromRequest(Request $request): UziUser
     {
         if (!$request->server->has('SSL_CLIENT_VERIFY') || $request->server->get('SSL_CLIENT_VERIFY') !== 'SUCCESS') {
-            throw new UziException('Webserver client cert check not passed');
+            throw new UziCertificateException('Webserver client cert check not passed');
         }
         if (!$request->server->has('SSL_CLIENT_CERT')) {
-            throw new UziException('No client certificate presented');
+            throw new UziCertificateException('No client certificate presented');
         }
 
         $x509 = new X509();
         $cert = $x509->loadX509($request->server->get('SSL_CLIENT_CERT'));
         if (!isset($cert['tbsCertificate']['subject']['rdnSequence'])) {
-            throw new UziException('No subject rdnSequence');
+            throw new UziCertificateException('No subject rdnSequence');
         }
 
         $surName = null;
@@ -73,7 +75,7 @@ class UziReader
                 }
 
                 if (!isset($value['otherName']['value']['ia5String'])) {
-                    throw new UziException('No ia5String');
+                    throw new UziCertificateException('No ia5String');
                 }
                 $subjectAltName = $value['otherName']['value']['ia5String'];
                 /**
@@ -90,7 +92,7 @@ class UziReader
                  */
                 $data = explode('-', $subjectAltName);
                 if (!is_array($data) || count($data) < 6) {
-                    throw new UziException('Incorrect SAN found');
+                    throw new UziCertificateException('Incorrect SAN found');
                 }
 
                 $user = new UziUser();
@@ -107,6 +109,6 @@ class UziReader
                 return $user;
             }
         }
-        throw new UziException('No valid UZI data found');
+        throw new UziCertificateNotUziException('No valid UZI data found');
     }
 }
