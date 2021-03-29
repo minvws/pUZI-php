@@ -28,7 +28,7 @@ class UziConstants
     public const UZI_ROLE_HEALTHCARE_PSYCHOLOGIST = '25.';               // Reference page 89
     public const UZI_ROLE_PSYCHOTHERAPIST = '16.';                       // Reference page 89
     public const UZI_ROLE_DENTIST = '02.';                               // Reference page 89
-    public const UZI_ROLE_MIDWIFE = '02.';                               // Reference page 89
+    public const UZI_ROLE_MIDWIFE = '03.';                               // Reference page 89
     public const UZI_ROLE_NURSE = '30.';                                 // Reference page 89
     public const UZI_ROLE_PHYS_ASSISTANT = '81.';                        // Reference page 89
     public const UZI_ROLE_ORTHOPEDAGOGUE_GENERALIST = '31.';             // Reference page 89
