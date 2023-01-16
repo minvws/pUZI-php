@@ -173,9 +173,9 @@ class UziUser implements \JsonSerializable
     }
 
     /**
-     * @return mixed|string[]
+     * @return mixed
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->toarray();
     }
