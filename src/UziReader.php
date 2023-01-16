@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UziReader
 {
-
     /**
      * @return UziUser
      * @throws UziException
