@@ -172,9 +172,7 @@ class UziUser implements \JsonSerializable
         $this->uzi_version = $uzi_version;
     }
 
-    /**
-     * @return mixed|string[]
-     */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->toarray();
