@@ -42,7 +42,7 @@ class UziReader
         }
 
         // Check valid CA path
-        if (! $x509->validateSignature(true)) {
+        if (! $x509->validateSignature(count($caCerts) > 0)) {
             throw new UziCertificateException('Invalid CA path');
         }
 
