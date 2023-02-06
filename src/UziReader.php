@@ -19,22 +19,14 @@ use Symfony\Component\HttpFoundation\Request;
 class UziReader
 {
     /**
+     * @param Request $request      The request object
+     * @param array $caCerts        Additional CA certificates to check against
      * @return UziUser
-     * @throws UziException
-     * @deprecated Use getDataFromRequest instead
+     * @throws UziCardExpired
+     * @throws UziCertificateException
+     * @throws UziCertificateNotUziException
      */
-    public function getData(): UziUser
-    {
-        $request = Request::createFromGlobals();
-        return $this->getDataFromRequest($request);
-    }
-
-    /**
-     * @param Request $request
-     * @return UziUser
-     * @throws UziException
-     */
-    public function getDataFromRequest(Request $request): UziUser
+    public function getDataFromRequest(Request $request, array $caCerts = []): UziUser
     {
         if (!$request->server->has('SSL_CLIENT_VERIFY') || $request->server->get('SSL_CLIENT_VERIFY') !== 'SUCCESS') {
             throw new UziCertificateException('Webserver client cert check not passed');
@@ -45,14 +37,25 @@ class UziReader
 
         $x509 = new X509();
         $cert = $x509->loadX509($request->server->get('SSL_CLIENT_CERT'));
-        if (!isset($cert['tbsCertificate']['subject']['rdnSequence'])) {
-            throw new UziCertificateNotUziException('No subject rdnSequence');
+        foreach ($caCerts as $caCert) {
+            $x509->loadCA($caCert);
         }
 
+        // Check valid CA path
+        if (! $x509->validateSignature(count($caCerts) > 0)) {
+            throw new UziCertificateException('Invalid CA path');
+        }
+
+        // Check if the certificate is expired
         if (! $x509->validateDate()) {
             throw new UziCardExpired('Uzi card expired');
         }
 
+        if (!isset($cert['tbsCertificate']['subject']['rdnSequence'])) {
+            throw new UziCertificateNotUziException('No subject rdnSequence');
+        }
+
+        // Check if the certificate is a UZI certificate
         $surName = null;
         $givenName = null;
         foreach ($cert['tbsCertificate']['subject']['rdnSequence'] as $sequence) {
@@ -113,6 +116,7 @@ class UziReader
                 return $user;
             }
         }
+
         throw new UziCertificateNotUziException('No valid UZI card found');
     }
 }
