@@ -2,6 +2,7 @@
 
 namespace MinVWS\PUZI;
 
+use MinVWS\PUZI\Exceptions\UziCardExpired;
 use MinVWS\PUZI\Exceptions\UziCertificateException;
 use MinVWS\PUZI\Exceptions\UziCertificateNotUziException;
 use phpseclib3\File\X509;
@@ -45,7 +46,11 @@ class UziReader
         $x509 = new X509();
         $cert = $x509->loadX509($request->server->get('SSL_CLIENT_CERT'));
         if (!isset($cert['tbsCertificate']['subject']['rdnSequence'])) {
-            throw new UziCertificateException('No subject rdnSequence');
+            throw new UziCertificateNotUziException('No subject rdnSequence');
+        }
+
+        if (! $x509->validateDate()) {
+            throw new UziCardExpired('Uzi card expired');
         }
 
         $surName = null;
@@ -63,7 +68,7 @@ class UziReader
             }
         }
 
-        foreach ($cert['tbsCertificate']['extensions'] as $extension) {
+        foreach ($cert['tbsCertificate']['extensions'] ?? [] as $extension) {
             if ($extension['extnId'] !== "id-ce-subjectAltName") {
                 continue;
             }
@@ -108,6 +113,6 @@ class UziReader
                 return $user;
             }
         }
-        throw new UziCertificateNotUziException('No valid UZI data found');
+        throw new UziCertificateNotUziException('No valid UZI card found');
     }
 }
