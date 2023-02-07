@@ -57,7 +57,7 @@ final class UziReaderTest extends TestCase
         $uzi = new UziReader();
 
         $this->expectException(UziCertificateNotUziException::class);
-        $this->expectExceptionMessage("No valid UZI data found");
+        $this->expectExceptionMessage("No valid UZI card found");
 
         $request = new Request();
         $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
@@ -71,7 +71,7 @@ final class UziReaderTest extends TestCase
         $uzi = new UziReader();
 
         $this->expectException(UziCertificateNotUziException::class);
-        $this->expectExceptionMessage("No valid UZI data found");
+        $this->expectExceptionMessage("No valid UZI card found");
 
         $request = new Request();
         $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
@@ -85,7 +85,7 @@ final class UziReaderTest extends TestCase
         $uzi = new UziReader();
 
         $this->expectException(UziCertificateNotUziException::class);
-        $this->expectExceptionMessage("No valid UZI data found");
+        $this->expectExceptionMessage("No valid UZI card found");
 
         $request = new Request();
         $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");

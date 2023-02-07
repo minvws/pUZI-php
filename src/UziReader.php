@@ -15,19 +15,33 @@ use Symfony\Component\HttpFoundation\Request;
 class UziReader
 {
     /**
-     * @param Request $request
-     * @return UziUser|null
+     * @param Request $request      The request object
+     * @param array $caCerts        Additional CA certificates to check against
+     * @return UziUser
+     * @throws UziCardExpired
+     * @throws UziCertificateException
+     * @throws UziCertificateNotUziException
      */
-    public function getDataFromRequest(Request $request): ?UziUser
+    public function getDataFromRequest(Request $request, array $caCerts = []): UziUser
     {
         $x509 = new X509();
-        $cert = $x509->loadX509($request->server->get('SSL_CLIENT_CERT'));
-        if (!$cert) {
-            return null;
+        $x509->loadX509($request->server->get('SSL_CLIENT_CERT'));
+        foreach ($caCerts as $caCert) {
+            $x509->loadCA($caCert);
+        }
+
+        // Check valid CA path
+        if (! $x509->validateSignature(count($caCerts) > 0)) {
+            throw new UziCertificateException('Invalid CA path');
+        }
+
+        // Check if the certificate is expired
+        if (! $x509->validateDate()) {
+            throw new UziCardExpired('Uzi card expired');
         }
 
         if (!isset($cert['tbsCertificate']['subject']['rdnSequence'])) {
-            return null;
+            throw new UziCertificateNotUziException('No subject rdnSequence');
         }
 
         // Check if the certificate is a UZI certificate
