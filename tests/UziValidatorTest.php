@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 final class UziValidatorTest extends TestCase
 {
-
     public function testSSLClientVerifyMissing(): void
     {
         $request = new Request();
@@ -88,7 +87,12 @@ final class UziValidatorTest extends TestCase
         $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-020-incorrect-oidca.cert'));
 
         $reader = new UziReader();
-        $validator = new UziValidator($reader, false, [UziConstants::UZI_TYPE_NAMED_EMPLOYEE], [UziConstants::UZI_ROLE_DOCTOR]);
+        $validator = new UziValidator(
+            $reader,
+            false,
+            [UziConstants::UZI_TYPE_NAMED_EMPLOYEE],
+            [UziConstants::UZI_ROLE_DOCTOR]
+        );
         $this->assertTrue($validator->isValid($request));
     }
 
@@ -96,7 +100,10 @@ final class UziValidatorTest extends TestCase
     {
         $request = new Request();
         $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
-        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-021-incorrect-uzi-version.cert'));
+        $request->server->set(
+            'SSL_CLIENT_CERT',
+            file_get_contents(__DIR__ . '/certs/mock-021-incorrect-uzi-version.cert')
+        );
 
         $this->expectException(UziVersionException::class);
         $this->expectExceptionMessage("UZI version not 1");
@@ -130,7 +137,12 @@ final class UziValidatorTest extends TestCase
         $this->expectExceptionMessage("UZI card role not allowed");
 
         $reader = new UziReader();
-        $validator = new UziValidator($reader, true, [UziConstants::UZI_TYPE_NAMED_EMPLOYEE], [UziConstants::UZI_ROLE_PHARMACIST]);
+        $validator = new UziValidator(
+            $reader,
+            true,
+            [UziConstants::UZI_TYPE_NAMED_EMPLOYEE],
+            [UziConstants::UZI_ROLE_PHARMACIST]
+        );
         $validator->validate($request);
     }
 
@@ -141,7 +153,12 @@ final class UziValidatorTest extends TestCase
         $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-011-correct.cert'));
 
         $reader = new UziReader();
-        $validator = new UziValidator($reader, true, [UziConstants::UZI_TYPE_NAMED_EMPLOYEE], [UziConstants::UZI_ROLE_NURSE]);
+        $validator = new UziValidator(
+            $reader,
+            true,
+            [UziConstants::UZI_TYPE_NAMED_EMPLOYEE],
+            [UziConstants::UZI_ROLE_NURSE]
+        );
         $this->assertTrue($validator->isValid($request));
     }
 }
