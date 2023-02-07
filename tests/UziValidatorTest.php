@@ -22,7 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
 final class UziValidatorTest extends TestCase
 {
 
-    public function testSSLClientVerifyMissing() {
+    public function testSSLClientVerifyMissing(): void
+    {
         $request = new Request();
 
         $this->expectException(UziCertificateException::class);
@@ -33,7 +34,8 @@ final class UziValidatorTest extends TestCase
         $validator->validate($request);
     }
 
-    public function testNoClientCertPresented() {
+    public function testNoClientCertPresented(): void
+    {
         $request = new Request();
         $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
 
@@ -45,7 +47,8 @@ final class UziValidatorTest extends TestCase
         $validator->validate($request);
     }
 
-    public function testInvalidCert() {
+    public function testInvalidCert(): void
+    {
         $request = new Request();
         $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
         $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-001-no-valid-uzi-data.cert'));
