@@ -5,11 +5,14 @@ namespace MinVWS\PUZI\Tests;
 use MinVWS\PUZI\Exceptions\UziAllowedRoleException;
 use MinVWS\PUZI\Exceptions\UziAllowedTypeException;
 use MinVWS\PUZI\Exceptions\UziCaException;
+use MinVWS\PUZI\Exceptions\UziCertificateException;
 use MinVWS\PUZI\Exceptions\UziVersionException;
 use MinVWS\PUZI\UziConstants;
+use MinVWS\PUZI\UziReader;
 use MinVWS\PUZI\UziValidator;
 use MinVWS\PUZI\UziUser;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class UziValidatorTest
@@ -18,72 +21,124 @@ use PHPUnit\Framework\TestCase;
  */
 final class UziValidatorTest extends TestCase
 {
-    public function testValidateIncorectOID(): void
+
+    public function testSSLClientVerifyMissing() {
+        $request = new Request();
+
+        $this->expectException(UziCertificateException::class);
+        $this->expectExceptionMessage("Webserver client cert check not passed");
+
+        $reader = new UziReader();
+        $validator = new UziValidator($reader, true, [], []);
+        $validator->validate($request);
+    }
+
+    public function testNoClientCertPresented() {
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+
+        $this->expectException(UziCertificateException::class);
+        $this->expectExceptionMessage("No client certificate presented");
+
+        $reader = new UziReader();
+        $validator = new UziValidator($reader, true, [], []);
+        $validator->validate($request);
+    }
+
+    public function testInvalidCert() {
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-001-no-valid-uzi-data.cert'));
+
+        $this->expectException(UziCertificateException::class);
+        $this->expectExceptionMessage("No UZI data found in certificate");
+
+        $reader = new UziReader();
+        $validator = new UziValidator($reader, true, [], []);
+        $validator->validate($request);
+    }
+
+    public function testValidateIncorectOIDca(): void
     {
         $user = new UziUser();
         $user->setOidCa("1.2.3.4");
 
         $this->expectException(UziCaException::class);
-        $this->expectExceptionMessage("CA OID not UZI register");
+        $this->expectExceptionMessage("CA OID not UZI register Care Provider or named employee");
 
-        $validator = new UziValidator(true, [], []);
-        $validator->validate($user);
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-020-incorrect-oidca.cert'));
+
+        $reader = new UziReader();
+        $validator = new UziValidator($reader, true, [], []);
+        $validator->validate($request);
+    }
+
+    public function testValidateIncorectOIDcaWithoutStrictCheck(): void
+    {
+        $user = new UziUser();
+        $user->setOidCa("1.2.3.4");
+
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-020-incorrect-oidca.cert'));
+
+        $reader = new UziReader();
+        $validator = new UziValidator($reader, false, [UziConstants::UZI_TYPE_NAMED_EMPLOYEE], [UziConstants::UZI_ROLE_DOCTOR]);
+        $this->assertTrue($validator->isValid($request));
     }
 
     public function testIncorrectVersion(): void
     {
-        $user = new UziUser();
-        $user->setOidCa(UziConstants::OID_CA_CARE_PROVIDER);
-        $user->setUziVersion("123");
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-021-incorrect-uzi-version.cert'));
 
         $this->expectException(UziVersionException::class);
         $this->expectExceptionMessage("UZI version not 1");
 
-        $validator = new UziValidator(true, [], []);
-        $validator->validate($user);
+        $reader = new UziReader();
+        $validator = new UziValidator($reader, true, [], []);
+        $validator->validate($request);
     }
 
     public function testNotAllowedType(): void
     {
-        $user = new UziUser();
-        $user->setOidCa(UziConstants::OID_CA_CARE_PROVIDER);
-        $user->setUziVersion("1");
-        $user->setCardType(UziConstants::UZI_TYPE_SERVER);
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-011-correct.cert'));
 
         $this->expectException(UziAllowedTypeException::class);
         $this->expectExceptionMessage("UZI card type not allowed");
 
-        $validator = new UziValidator(true, [UziConstants::UZI_TYPE_CARE_PROVIDER], []);
-        $validator->validate($user);
+        $reader = new UziReader();
+        $validator = new UziValidator($reader, true, [UziConstants::UZI_TYPE_CARE_PROVIDER], []);
+        $validator->validate($request);
     }
 
     public function testNotAllowedRole(): void
     {
-        $user = new UziUser();
-        $user->setOidCa(UziConstants::OID_CA_CARE_PROVIDER);
-        $user->setUziVersion("1");
-        $user->setCardType(UziConstants::UZI_TYPE_CARE_PROVIDER);
-        $user->setRole(UziConstants::UZI_ROLE_DENTIST);
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-011-correct.cert'));
 
         $this->expectException(UziAllowedRoleException::class);
         $this->expectExceptionMessage("UZI card role not allowed");
 
-        $validator = new UziValidator(true, [UziConstants::UZI_TYPE_CARE_PROVIDER], [UziConstants::UZI_ROLE_NURSE]);
-        $validator->validate($user);
+        $reader = new UziReader();
+        $validator = new UziValidator($reader, true, [UziConstants::UZI_TYPE_NAMED_EMPLOYEE], [UziConstants::UZI_ROLE_PHARMACIST]);
+        $validator->validate($request);
     }
 
     public function testIsValid(): void
     {
-        $user = new UziUser();
-        $user->setOidCa(UziConstants::OID_CA_CARE_PROVIDER);
-        $user->setUziVersion("1");
-        $user->setCardType(UziConstants::UZI_TYPE_CARE_PROVIDER);
-        $user->setRole(UziConstants::UZI_ROLE_DENTIST);
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-011-correct.cert'));
 
-        $validator = new UziValidator(true, [UziConstants::UZI_TYPE_CARE_PROVIDER], [UziConstants::UZI_ROLE_DENTIST]);
-        $this->assertTrue($validator->isValid($user));
-
-        $user->setRole(UziConstants::UZI_ROLE_PHARMACIST);
-        $this->assertFalse($validator->isValid($user));
+        $reader = new UziReader();
+        $validator = new UziValidator($reader, true, [UziConstants::UZI_TYPE_NAMED_EMPLOYEE], [UziConstants::UZI_ROLE_NURSE]);
+        $this->assertTrue($validator->isValid($request));
     }
 }

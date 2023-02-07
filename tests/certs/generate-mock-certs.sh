@@ -94,3 +94,28 @@ openssl req -x509 \
     -days 3650 \
     -subj "/C=NL/O=MockTest Cert/title=physician/SN=doe-11111111/GN=john/CN=john doe-11111111" \
     -addext "subjectAltName = otherName:2.5.5.5;IA5STRING:2.16.528.1.1003.1.3.5.5.2-1-11111111-N-90000111-01.015-00000000"
+
+openssl req -x509 \
+    -nodes \
+    -keyout dummy.key \
+    -out mock-020-incorrect-oidca.cert \
+    -days 3650 \
+    -subj "/C=NL/O=MockTest Cert/title=physician/SN=doe-11111111/GN=john/CN=john doe-11111111" \
+    -addext "subjectAltName = otherName:2.5.5.5;IA5STRING:9.9.9.9.9.9.9.9.9.9-1-11111111-N-90000111-01.015-00000000"
+
+
+openssl req -x509 \
+    -nodes \
+    -keyout dummy.key \
+    -out mock-020-incorrect-oidca.cert \
+    -days 3650 \
+    -subj "/C=NL/O=MockTest Cert/title=physician/SN=doe-11111111/GN=john/CN=john doe-11111111" \
+    -addext "subjectAltName = otherName:2.5.5.5;IA5STRING:9.9.9.9.9.9.9.9.9.9-1-11111111-N-90000111-01.015-00000000"
+
+openssl req -x509 \
+    -nodes \
+    -keyout dummy.key \
+    -out mock-021-incorrect-uzi-version.cert \
+    -days 3650 \
+    -subj "/C=NL/O=MockTest Cert/title=physician/SN=doe-11111111/GN=john/CN=john doe-11111111" \
+    -addext "subjectAltName = otherName:2.5.5.5;IA5STRING:2.16.528.1.1003.1.3.5.5.2-1252-11111111-N-90000111-01.015-00000000"
