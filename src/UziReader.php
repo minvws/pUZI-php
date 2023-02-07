@@ -2,11 +2,7 @@
 
 namespace MinVWS\PUZI;
 
-use MinVWS\PUZI\Exceptions\UziCardExpired;
-use MinVWS\PUZI\Exceptions\UziCertificateException;
-use MinVWS\PUZI\Exceptions\UziCertificateNotUziException;
 use phpseclib3\File\X509;
-use MinVWS\PUZI\Exceptions\UziException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,40 +15,19 @@ use Symfony\Component\HttpFoundation\Request;
 class UziReader
 {
     /**
-     * @param Request $request      The request object
-     * @param array $caCerts        Additional CA certificates to check against
-     * @return UziUser
-     * @throws UziCardExpired
-     * @throws UziCertificateException
-     * @throws UziCertificateNotUziException
+     * @param Request $request
+     * @return UziUser|null
      */
-    public function getDataFromRequest(Request $request, array $caCerts = []): UziUser
+    public function getDataFromRequest(Request $request): ?UziUser
     {
-        if (!$request->server->has('SSL_CLIENT_VERIFY') || $request->server->get('SSL_CLIENT_VERIFY') !== 'SUCCESS') {
-            throw new UziCertificateException('Webserver client cert check not passed');
-        }
-        if (!$request->server->has('SSL_CLIENT_CERT')) {
-            throw new UziCertificateException('No client certificate presented');
-        }
-
         $x509 = new X509();
         $cert = $x509->loadX509($request->server->get('SSL_CLIENT_CERT'));
-        foreach ($caCerts as $caCert) {
-            $x509->loadCA($caCert);
-        }
-
-        // Check valid CA path
-        if (! $x509->validateSignature(count($caCerts) > 0)) {
-            throw new UziCertificateException('Invalid CA path');
-        }
-
-        // Check if the certificate is expired
-        if (! $x509->validateDate()) {
-            throw new UziCardExpired('Uzi card expired');
+        if (!$cert) {
+            return null;
         }
 
         if (!isset($cert['tbsCertificate']['subject']['rdnSequence'])) {
-            throw new UziCertificateNotUziException('No subject rdnSequence');
+            return null;
         }
 
         // Check if the certificate is a UZI certificate
@@ -82,9 +57,9 @@ class UziReader
                 }
 
                 if (!isset($value['otherName']['value']['ia5String'])) {
-                    throw new UziCertificateException('No ia5String');
+                    return null;
                 }
-                $subjectAltName = $value['otherName']['value']['ia5String'];
+
                 /**
                  * @var array $data
                  * Reference page 60
@@ -97,9 +72,11 @@ class UziReader
                  * [5] Role (reference page 89)
                  * [6] AGB code
                  */
+                $subjectAltName = $value['otherName']['value']['ia5String'];
+                /** @var string[]|false $data */
                 $data = explode('-', $subjectAltName);
                 if (!is_array($data) || count($data) < 6) {
-                    throw new UziCertificateException('Incorrect SAN found');
+                    return null;
                 }
 
                 $user = new UziUser();
@@ -117,6 +94,6 @@ class UziReader
             }
         }
 
-        throw new UziCertificateNotUziException('No valid UZI card found');
+        return null;
     }
 }

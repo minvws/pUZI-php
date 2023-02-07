@@ -33,7 +33,7 @@
     }
   ],
   "require": {
-    "php": ">=7.3",
+    "php": ">=7.4",
     "phpseclib/phpseclib": "^3.0.5",
     "psr/http-message": "^1.0",
     "ext-json": "*"

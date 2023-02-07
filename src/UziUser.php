@@ -9,24 +9,15 @@ namespace MinVWS\PUZI;
  */
 class UziUser implements \JsonSerializable
 {
-    /** @var string */
-    protected $agb_code = "";
-    /** @var string */
-    protected $card_type = "";
-    /** @var string */
-    protected $given_name = "";
-    /** @var string */
-    protected $oid_ca = "";
-    /** @var string */
-    protected $role = "";
-    /** @var string */
-    protected $subscriber_number = "";
-    /** @var string */
-    protected $sur_name = "";
-    /** @var string */
-    protected $uzi_number = "";
-    /** @var string */
-    protected $uzi_version = "";
+    protected string $agb_code = "";
+    protected string $card_type = "";
+    protected string $given_name = "";
+    protected string $oid_ca = "";
+    protected string $role = "";
+    protected string $subscriber_number = "";
+    protected string $sur_name = "";
+    protected string $uzi_number = "";
+    protected string $uzi_version = "";
 
     /**
      * @return string
