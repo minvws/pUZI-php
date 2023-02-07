@@ -58,7 +58,7 @@ class UziValidator
         }
 
         $x509 = new X509();
-        $cert = $x509->loadX509($request->server->get('SSL_CLIENT_CERT'));
+        $x509->loadX509($request->server->get('SSL_CLIENT_CERT'));
         foreach ($this->caCerts as $caCert) {
             $x509->loadCA($caCert);
         }
@@ -73,7 +73,7 @@ class UziValidator
         }
 
         if (
-            $this->strictCAcheck == true &&
+            $this->strictCAcheck === true &&
             $uziInfo->getOidCa() !== UziConstants::OID_CA_CARE_PROVIDER &&
             $uziInfo->getOidCa() !== UziConstants::OID_CA_NAMED_EMPLOYEE
         ) {
