@@ -73,6 +73,7 @@ class UziReader
                  * [6] AGB code
                  */
                 $subjectAltName = $value['otherName']['value']['ia5String'];
+                /** @var string[]|false $data */
                 $data = explode('-', $subjectAltName);
                 if (!is_array($data) || count($data) < 6) {
                     return null;
