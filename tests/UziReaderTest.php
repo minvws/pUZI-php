@@ -165,7 +165,10 @@ final class UziReaderTest extends TestCase
 
         $request = new Request();
         $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
-        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-022-correct-server-cert.cert'));
+        $request->server->set(
+            'SSL_CLIENT_CERT',
+            file_get_contents(__DIR__ . '/certs/mock-022-correct-server-cert.cert')
+        );
 
         /** @var UziUser $uziInfo */
         $uziInfo = $uzi->getDataFromRequest($request);
@@ -181,5 +184,4 @@ final class UziReaderTest extends TestCase
         $this->assertEquals('1', $uziInfo->getUziVersion());
         $this->assertEquals('1234ABCD', $uziInfo->getSerialNumber());
     }
-
 }
