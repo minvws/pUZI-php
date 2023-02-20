@@ -24,16 +24,19 @@ class UziValidator
     protected array $allowedRoles;
     protected array $caCerts = [];
 
-    /** @var callable */
+    /** @var callable|null */
     protected $validatorCallback = null;
 
+    /**
+     * @param callable|null $validatorCallback
+     */
     public function __construct(
         UziReader $reader,
         bool $strictCaCheck,
         array $allowedTypes,
         array $allowedRoles,
         array $caCerts = [],
-        callable $validatorCallback = null
+        $validatorCallback = null
     ) {
         $this->reader = $reader;
         $this->strictCAcheck = $strictCaCheck;
@@ -101,8 +104,10 @@ class UziValidator
         }
 
         // Check roles for care provider
-        if ($uziInfo->getCardType() === UziConstants::UZI_TYPE_CARE_PROVIDER &&
-            !in_array(substr($uziInfo->getRole(), 0, 3), $this->allowedRoles)) {
+        if (
+            $uziInfo->getCardType() === UziConstants::UZI_TYPE_CARE_PROVIDER &&
+            !in_array(substr($uziInfo->getRole(), 0, 3), $this->allowedRoles)
+        ) {
             throw new UziAllowedRoleException("UZI card role not allowed");
         }
 

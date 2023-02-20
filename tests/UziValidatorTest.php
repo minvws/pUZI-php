@@ -161,7 +161,7 @@ final class UziValidatorTest extends TestCase
         );
         $this->assertTrue($validator->isValid($request));
     }
-    
+
     public function testCallback(): void
     {
         $request = new Request();
