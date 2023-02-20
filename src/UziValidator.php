@@ -27,9 +27,6 @@ class UziValidator
     /** @var callable|null */
     protected $validatorCallback = null;
 
-    /**
-     * @param callable|null $validatorCallback
-     */
     public function __construct(
         UziReader $reader,
         bool $strictCaCheck,
