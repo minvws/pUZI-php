@@ -119,3 +119,11 @@ openssl req -x509 \
     -days 3650 \
     -subj "/C=NL/O=MockTest Cert/title=physician/SN=doe-11111111/GN=john/CN=john doe-11111111" \
     -addext "subjectAltName = otherName:2.5.5.5;IA5STRING:2.16.528.1.1003.1.3.5.5.2-1252-11111111-N-90000111-01.015-00000000"
+
+openssl req -x509 \
+    -nodes \
+    -keyout dummy.key \
+    -out mock-022-correct-server-cert.cert \
+    -days 3650 \
+    -subj "/C=NL/O=MockTest Cert/CN=test.example.org/serialNumber=1234ABCD" \
+    -addext "subjectAltName = otherName:2.5.5.5;IA5STRING:2.16.528.1.1003.1.3.5.5.2-1-12345678-S-90000123-00.000-00000000"

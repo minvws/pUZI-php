@@ -30,19 +30,19 @@ class UziReader
             return null;
         }
 
+        $uziInfo = new UziUser();
+
         // Check if the certificate is a UZI certificate
-        $surName = null;
-        $givenName = null;
         foreach ($cert['tbsCertificate']['subject']['rdnSequence'] as $sequence) {
             $data = reset($sequence);
             if ($data['type'] === 'id-at-surname') {
-                $surName = $data['value']['utf8String'];
+                $uziInfo->setSurName($data['value']['utf8String']);
             }
             if ($data['type'] === 'id-at-givenName') {
-                $givenName = $data['value']['utf8String'];
+                $uziInfo->setGivenName($data['value']['utf8String']);
             }
-            if ($givenName && $surName) {
-                break;
+            if ($data['type'] === 'id-at-serialNumber') {
+                $uziInfo->setSerialNumber($data['value']['printableString']);
             }
         }
 
@@ -53,7 +53,7 @@ class UziReader
 
             foreach ($extension['extnValue'] as $value) {
                 if (!isset($value['otherName']) || $value['otherName']['type-id'] !== UziConstants::OID_IA5STRING) {
-                    continue;
+                    return null;
                 }
 
                 if (!isset($value['otherName']['value']['ia5String'])) {
@@ -78,20 +78,16 @@ class UziReader
                 if (!is_array($data) || count($data) < 6) {
                     return null;
                 }
-
-                $user = new UziUser();
-                $user->setGivenName($givenName ?? "");
-                $user->setSurName($surName ?? "");
-                $user->setOidCa($data[0]);
-                $user->setUziVersion($data[1]);
-                $user->setUziNumber($data[2]);
-                $user->setCardType($data[3]);
-                $user->setSubscriberNumber($data[4]);
-                $user->setRole($data[5]);
-                $user->setAgbCode($data[6]);
-
-                return $user;
+                $uziInfo->setOidCa($data[0]);
+                $uziInfo->setUziVersion($data[1]);
+                $uziInfo->setUziNumber($data[2]);
+                $uziInfo->setCardType($data[3]);
+                $uziInfo->setSubscriberNumber($data[4]);
+                $uziInfo->setRole($data[5]);
+                $uziInfo->setAgbCode($data[6]);
             }
+
+            return $uziInfo;
         }
 
         return null;

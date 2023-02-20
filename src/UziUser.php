@@ -18,6 +18,7 @@ class UziUser implements \JsonSerializable
     protected string $sur_name = "";
     protected string $uzi_number = "";
     protected string $uzi_version = "";
+    protected string $serial_number = "";
 
     /**
      * @return string
@@ -163,6 +164,22 @@ class UziUser implements \JsonSerializable
         $this->uzi_version = $uzi_version;
     }
 
+    /**
+     * @return string
+     */
+    public function getSerialNumber(): string
+    {
+        return $this->serial_number;
+    }
+
+    /**
+     * @param string $serial_number
+     */
+    public function setSerialNumber(string $serial_number): void
+    {
+        $this->serial_number = $serial_number;
+    }
+
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
@@ -183,7 +200,8 @@ class UziUser implements \JsonSerializable
             'subscriber_number' => $this->getSubscriberNumber(),
             'sur_name' => $this->getSurName(),
             'uzi_number' => $this->getUziNumber(),
-            'uzi_version' => $this->getUziVersion()
+            'uzi_version' => $this->getUziVersion(),
+            'serial_number' => $this->getSerialNumber(),
         ];
     }
 }
