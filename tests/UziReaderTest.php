@@ -133,6 +133,7 @@ final class UziReaderTest extends TestCase
         $this->assertEquals('doe-12345678', $uziInfo->getSurName());
         $this->assertEquals('12345678', $uziInfo->getUziNumber());
         $this->assertEquals('1', $uziInfo->getUziVersion());
+        $this->assertEquals('', $uziInfo->getSerialNumber());
     }
 
     public function testCheckValidAdminCert(): void
@@ -155,5 +156,32 @@ final class UziReaderTest extends TestCase
         $this->assertEquals('doe-11111111', $uziInfo->getSurName());
         $this->assertEquals('11111111', $uziInfo->getUziNumber());
         $this->assertEquals('1', $uziInfo->getUziVersion());
+        $this->assertEquals('', $uziInfo->getSerialNumber());
+    }
+
+    public function testCheckValidServerCert(): void
+    {
+        $uzi = new UziReader();
+
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set(
+            'SSL_CLIENT_CERT',
+            file_get_contents(__DIR__ . '/certs/mock-022-correct-server-cert.cert')
+        );
+
+        /** @var UziUser $uziInfo */
+        $uziInfo = $uzi->getDataFromRequest($request);
+
+        $this->assertEquals('00000000', $uziInfo->getAgbCode());
+        $this->assertEquals('S', $uziInfo->getCardType());
+        $this->assertEquals('', $uziInfo->getGivenName());
+        $this->assertEquals('2.16.528.1.1003.1.3.5.5.2', $uziInfo->getOidCa());
+        $this->assertEquals('00.000', $uziInfo->getRole());
+        $this->assertEquals('90000123', $uziInfo->getSubscriberNumber());
+        $this->assertEquals('', $uziInfo->getSurName());
+        $this->assertEquals('12345678', $uziInfo->getUziNumber());
+        $this->assertEquals('1', $uziInfo->getUziVersion());
+        $this->assertEquals('1234ABCD', $uziInfo->getSerialNumber());
     }
 }
