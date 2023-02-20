@@ -24,18 +24,23 @@ class UziValidator
     protected array $allowedRoles;
     protected array $caCerts = [];
 
+    /** @var callable */
+    protected $validatorCallback = null;
+
     public function __construct(
         UziReader $reader,
         bool $strictCaCheck,
         array $allowedTypes,
         array $allowedRoles,
-        array $caCerts = []
+        array $caCerts = [],
+        callable $validatorCallback = null
     ) {
+        $this->reader = $reader;
         $this->strictCAcheck = $strictCaCheck;
         $this->allowedTypes = $allowedTypes;
         $this->allowedRoles = $allowedRoles;
-        $this->reader = $reader;
         $this->caCerts = $caCerts;
+        $this->validatorCallback = $validatorCallback;
     }
 
     public function isValid(Request $request): bool
@@ -94,8 +99,16 @@ class UziValidator
         if (!in_array($uziInfo->getCardType(), $this->allowedTypes)) {
             throw new UziAllowedTypeException('UZI card type not allowed');
         }
-        if (!in_array(substr($uziInfo->getRole(), 0, 3), $this->allowedRoles)) {
+
+        // Check roles for care provider
+        if ($uziInfo->getCardType() === UziConstants::UZI_TYPE_CARE_PROVIDER &&
+            !in_array(substr($uziInfo->getRole(), 0, 3), $this->allowedRoles)) {
             throw new UziAllowedRoleException("UZI card role not allowed");
+        }
+
+        // If a specific callback is set, call it
+        if ($this->validatorCallback && call_user_func($this->validatorCallback, $uziInfo) === false) {
+            throw new UziException('Uzi certificate validation failed (callback returned false)');
         }
     }
 }
