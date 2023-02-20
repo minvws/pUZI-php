@@ -123,7 +123,7 @@ final class UziValidatorTest extends TestCase
         $this->expectExceptionMessage("UZI card type not allowed");
 
         $reader = new UziReader();
-        $validator = new UziValidator($reader, true, [UziConstants::UZI_TYPE_CARE_PROVIDER], []);
+        $validator = new UziValidator($reader, true, [UziConstants::UZI_TYPE_SERVER], []);
         $validator->validate($request);
     }
 
@@ -140,7 +140,7 @@ final class UziValidatorTest extends TestCase
         $validator = new UziValidator(
             $reader,
             true,
-            [UziConstants::UZI_TYPE_NAMED_EMPLOYEE],
+            [UziConstants::UZI_TYPE_CARE_PROVIDER],
             [UziConstants::UZI_ROLE_PHARMACIST]
         );
         $validator->validate($request);
@@ -156,9 +156,29 @@ final class UziValidatorTest extends TestCase
         $validator = new UziValidator(
             $reader,
             true,
-            [UziConstants::UZI_TYPE_NAMED_EMPLOYEE],
+            [UziConstants::UZI_TYPE_CARE_PROVIDER],
             [UziConstants::UZI_ROLE_NURSE]
         );
         $this->assertTrue($validator->isValid($request));
+    }
+
+    public function testCallback(): void
+    {
+        $request = new Request();
+        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
+        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-011-correct.cert'));
+
+        $reader = new UziReader();
+        $validator = new UziValidator(
+            $reader,
+            true,
+            [UziConstants::UZI_TYPE_CARE_PROVIDER],
+            [UziConstants::UZI_ROLE_NURSE],
+            [],
+            function (UziUser $info) {
+                return false;
+            }
+        );
+        $this->assertFalse($validator->isValid($request));
     }
 }

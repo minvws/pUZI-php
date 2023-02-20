@@ -125,7 +125,7 @@ final class UziReaderTest extends TestCase
         $uziInfo = $uzi->getDataFromRequest($request);
 
         $this->assertEquals('00000000', $uziInfo->getAgbCode());
-        $this->assertEquals('N', $uziInfo->getCardType());
+        $this->assertEquals('Z', $uziInfo->getCardType());
         $this->assertEquals('john', $uziInfo->getGivenName());
         $this->assertEquals('2.16.528.1.1003.1.3.5.5.2', $uziInfo->getOidCa());
         $this->assertEquals('30.015', $uziInfo->getRole());
