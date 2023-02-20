@@ -49,7 +49,7 @@ Add the following to your `composer.json` and then run `composer install`.
 ```json
 {
     "require": {
-        "minvws/puzi-php": "^0.2"
+        "minvws/puzi-php": "^v2.0"
     }
 }
 ```
