@@ -20,7 +20,7 @@ Questions and contributions are welcome via [GitHub](https://github.com/minvws/p
 
 ## Requirements
 
-* PHP >= 7.3
+* PHP >= 7.4
 
 Apache config (or NginX equivalent):
 ```apacheconf
@@ -121,7 +121,7 @@ not correctly validated.
 
 ## Used by
 
-* puzi-laravel - [Laravel wrapper for proficient UZI pass reader](https://github.com/minvws/pUZI-laravel) for Laravel 6, 7 and 8.
+* puzi-laravel - [Laravel wrapper for proficient UZI pass reader](https://github.com/minvws/pUZI-laravel) for Laravel 8 or later.
 
 ## Alternatives
 
