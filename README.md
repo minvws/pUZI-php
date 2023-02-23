@@ -122,6 +122,7 @@ not correctly validated.
 ## Used by
 
 * puzi-laravel - [Laravel wrapper for proficient UZI pass reader](https://github.com/minvws/pUZI-laravel) for Laravel 8 or later.
+* puzi-auth-bundle - [UZI authentication bundle for Symfony](https://github.com/minvws/puzi-auth-bundle) for Symfony 4 or later.
 
 ## Alternatives
 
