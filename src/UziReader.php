@@ -56,7 +56,7 @@ class UziReader
         return $uziInfo->getUziNumber() ? $uziInfo : null;
     }
 
-    protected function parseSubjectAltName($extension, UziUser $uziInfo)
+    protected function parseSubjectAltName(array $extension, UziUser $uziInfo): void
     {
         foreach ($extension['extnValue'] as $value) {
             if (!isset($value['otherName']) || $value['otherName']['type-id'] !== UziConstants::OID_IA5STRING) {
