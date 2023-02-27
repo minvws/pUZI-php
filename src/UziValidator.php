@@ -4,7 +4,6 @@ namespace MinVWS\PUZI;
 
 use MinVWS\PUZI\Exceptions\UziAllowedRoleException;
 use MinVWS\PUZI\Exceptions\UziAllowedTypeException;
-use MinVWS\PUZI\Exceptions\UziCaException;
 use MinVWS\PUZI\Exceptions\UziCardExpired;
 use MinVWS\PUZI\Exceptions\UziCertificateException;
 use MinVWS\PUZI\Exceptions\UziException;
@@ -79,14 +78,6 @@ class UziValidator
         $uziInfo = $this->reader->getDataFromRequest($request);
         if (!$uziInfo) {
             throw new UziCertificateException('No UZI data found in certificate');
-        }
-
-        if (
-            $this->strictCAcheck === true &&
-            $uziInfo->getOidCa() !== UziConstants::OID_CA_CARE_PROVIDER &&
-            $uziInfo->getOidCa() !== UziConstants::OID_CA_NAMED_EMPLOYEE
-        ) {
-            throw new UziCaException('CA OID not UZI register Care Provider or named employee');
         }
 
         if (! $x509->validateSignature(count($this->caCerts) > 0)) {

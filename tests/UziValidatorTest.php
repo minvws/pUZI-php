@@ -4,7 +4,6 @@ namespace MinVWS\PUZI\Tests;
 
 use MinVWS\PUZI\Exceptions\UziAllowedRoleException;
 use MinVWS\PUZI\Exceptions\UziAllowedTypeException;
-use MinVWS\PUZI\Exceptions\UziCaException;
 use MinVWS\PUZI\Exceptions\UziCertificateException;
 use MinVWS\PUZI\Exceptions\UziVersionException;
 use MinVWS\PUZI\UziConstants;
@@ -58,42 +57,6 @@ final class UziValidatorTest extends TestCase
         $reader = new UziReader();
         $validator = new UziValidator($reader, true, [], []);
         $validator->validate($request);
-    }
-
-    public function testValidateIncorectOIDca(): void
-    {
-        $user = new UziUser();
-        $user->setOidCa("1.2.3.4");
-
-        $this->expectException(UziCaException::class);
-        $this->expectExceptionMessage("CA OID not UZI register Care Provider or named employee");
-
-        $request = new Request();
-        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
-        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-020-incorrect-oidca.cert'));
-
-        $reader = new UziReader();
-        $validator = new UziValidator($reader, true, [], []);
-        $validator->validate($request);
-    }
-
-    public function testValidateIncorectOIDcaWithoutStrictCheck(): void
-    {
-        $user = new UziUser();
-        $user->setOidCa("1.2.3.4");
-
-        $request = new Request();
-        $request->server->set('SSL_CLIENT_VERIFY', "SUCCESS");
-        $request->server->set('SSL_CLIENT_CERT', file_get_contents(__DIR__ . '/certs/mock-020-incorrect-oidca.cert'));
-
-        $reader = new UziReader();
-        $validator = new UziValidator(
-            $reader,
-            false,
-            [UziConstants::UZI_TYPE_NAMED_EMPLOYEE],
-            [UziConstants::UZI_ROLE_DOCTOR]
-        );
-        $this->assertTrue($validator->isValid($request));
     }
 
     public function testIncorrectVersion(): void
