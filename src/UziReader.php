@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class UziReader
  * SPDX-License-Identifier: EUPL-1.2
- * For reference please read
- * https://www.zorgcsp.nl/documents/RK1%20CPS%20UZI-register%20V10.2%20ENG.pdf
+ * For reference please read, CA model pasmodel certificaatprofielen v 10.4.1
+ * @link https://www.uziregister.nl/softwareleveranciers
  * @package MinVWS\PUZI
  */
 class UziReader
@@ -63,20 +63,25 @@ class UziReader
                 continue;
             }
 
+            /**
+             * Reference page 15
+             * Subject: 4.8 SubjectAltName.otherName
+             */
             if (!isset($value['otherName']['value']['ia5String'])) {
                 continue;
             }
 
             /**
              * @var array $data
-             * Reference page 60
+             * Reference page 16
+             * Subject: 4.8.3
              *
              * [0] OID CA
              * [1] UZI Version
              * [2] UZI number
              * [3] Card type
              * [4] Subscriber number
-             * [5] Role (reference page 89)
+             * [5] Role (see link in UziConstants class)
              * [6] AGB code
              */
             $subjectAltName = $value['otherName']['value']['ia5String'];
