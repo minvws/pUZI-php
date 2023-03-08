@@ -73,28 +73,30 @@ var_dump($user->toArray());
 
 ```text
 array(9) {
-  'givenName' =>
-  string(4) "john"
-  'surName' =>
-  string(12) "doe-11111111"
-  'OidCa' =>
-  string(25) "2.16.528.1.1003.1.3.5.5.2"
-  'UziVersion' =>
-  string(1) "1"
-  'UziNumber' =>
-  string(8) "11111111"
-  'CardType' =>
-  string(1) "N"
-  'SubscriberNumber' =>
-  string(8) "90000111"
-  'Role' =>
-  string(6) "01.015"
-  'AgbCode' =>
+  'agb_code' =>
   string(8) "00000000"
+  'card_type' =>
+  string(1) "N"
+  'given_name' =>
+  string(4) "john"
+  'oid_ca' =>
+  string(25) "2.16.528.1.1003.1.3.5.5.2"
+  'role' =>
+  string(6) "01.015"
+  'subscriber_number' =>
+  string(6) "90000111"
+  'sur_name' =>
+  string(12) "doe-11111111"
+  'uzi_number' =>
+  string(8) "11111111"
+  'uzi_version' =>
+  string(1) "1"
+  'serial_number' =>
+  string(8) "11111111"
 }
 ```
 
-This package also allows validation of the returned user:
+This package also allows validation of the request:
 
 ```php
 $allowedTypes = [
@@ -106,8 +108,8 @@ $allowedRoles = [
     UziConstants::UZI_ROLE_PHARMACIST,    
 ];
 
-$validator = new UziValidator(true, $allowedTypes, $allowedRoles);
-if ($validator->isValid($user)) {
+$validator = new UziValidator(new UziReader(), true, $allowedTypes, $allowedRoles);
+if ($validator->isValid($request)) {
     print "Validated as doctor or pharmasist";
 }
 ```
