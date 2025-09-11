@@ -18,6 +18,8 @@ pUZI is available under the EU PL licence. It was created early 2021 during the 
 
 Questions and contributions are welcome via [GitHub](https://github.com/minvws/pUZI-php/issues).
 
+## Testen van de CLA-integratie, niet mergen
+
 ## Requirements
 
 * PHP >= 7.4
